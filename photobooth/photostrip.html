@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probablyy a cat — Photo Booth</title>
+  <link rel="stylesheet" href="../shared/shared.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: transparent;
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .card-wrap {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;      /* Vertically centers the card */
+  justify-content: center;     /* Horizontally centers the card */
+  padding: 20px;               /* Small safety padding for mobile */
+  /* Remove the padding-top that was here before! */
+  z-index: 10;
+}
+
+.card {
+  background: #111;
+  border-radius: clamp(20px, 4vw, 40px);
+  padding: clamp(20px, 5vw, 40px);
+  width: 100%;
+  max-width: 500px;           /* Slightly narrower looks better for camera */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  /* Ensure the card itself doesn't have huge margins */
+  margin: 0; 
+}
+
+    .cam-viewport {
+      width: 100%;
+      background: #ffffff;
+      border-radius: clamp(16px, 3vw, 28px);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/3;
+    }
+
+    #videoEl {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+      display: block;
+    }
+
+    .countdown-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.4);
+      opacity: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      transition: opacity 0.2s;
+    }
+
+    .countdown-overlay.visible { opacity: 1; }
+
+    .countdown-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(60px, 14vw, 160px);
+      font-weight: 700;
+      color: #fff;
+      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .flash {
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      transition: opacity 0.05s;
+    }
+
+    .flash.go { opacity: 1; }
+
+    .shot-dots {
+      display: flex;
+      gap: clamp(10px, 2vw, 20px);
+    }
+
+    .dot {
+      width: clamp(12px, 2.5vw, 22px);
+      height: clamp(12px, 2.5vw, 22px);
+      border-radius: 50%;
+      background: #444;
+      transition: background 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .dot.taken {
+      background: #f0ece8;
+      transform: scale(1.2);
+    }
+
+    .smile-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(16px, 3.5vw, 36px);
+      font-weight: 500;
+      color: #f0ece8;
+      text-align: center;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: clamp(10px, 2vw, 20px);
+      width: 100%;
+    }
+
+    .start-btn {
+      flex: 1;
+      background: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: clamp(12px, 2vh, 22px) clamp(16px, 3vw, 32px);
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(14px, 3vw, 28px);
+      font-weight: 500;
+      color: #111;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .start-btn:hover  { background: #e8e8e8; }
+    .start-btn:active { background: #c8c8c8; transform: scale(0.98); }
+    .start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .next-btn {
+      flex: 1;
+      background: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: clamp(12px, 2vh, 22px) clamp(16px, 3vw, 32px);
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(14px, 3vw, 28px);
+      font-weight: 500;
+      color: #111;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+      display: none;
+    }
+
+    .next-btn.visible { display: block; }
+    .next-btn:hover  { background: #e8e8e8; }
+    .next-btn:active { background: #c8c8c8; transform: scale(0.98); }
+
+    @keyframes popUp {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <img src="../images/ui/1.svg" class="bg-image" alt="">
+  <div class="progress-path" id="navPath"></div>
+
+  <div class="card-wrap">
+    <div class="card" style="background: #111; border-radius: 40px; padding: 40px; width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+      
+      <div class="cam-viewport">
+        <video id="videoEl" autoplay playsinline></video>
+        <div class="countdown-overlay" id="countdownOverlay">
+          <div class="countdown-number" id="countdownNumber">3</div>
+        </div>
+        <div class="flash" id="flash"></div>
+      </div>
+
+      <div class="shot-dots">
+        <div class="dot" id="dot0"></div>
+        <div class="dot" id="dot1"></div>
+        <div class="dot" id="dot2"></div>
+      </div>
+
+      <p class="smile-text" id="smileText">Are you ready?</p>
+
+      <div class="btn-row">
+        <button class="start-btn" id="startBtn">start</button>
+        <button class="next-btn" id="nextBtn">create my strip</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="photo0" style="display:none"></canvas>
+  <canvas id="photo1" style="display:none"></canvas>
+  <canvas id="photo2" style="display:none"></canvas>
+
+  <script src="photostrip.js"></script>
+  <script src="../shared/shared.js"></script>
+  <script>initNav();</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Take a quick photo and answer some questions to match with a cat!">
+  <meta property="og:title" content="Probablyy a cat">
+  <meta property="og:description" content="Find out which cat matches your personality!">
+  <meta property="og:type" content="website">
+  <title>Probablyy a cat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kulim+Park:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <img src="../images/ui/1.svg" class="bg-image" alt="">
+<div class="screen">
+
+  <!-- CAT EAR ILLUSTRATION TOP -->
+  <div class="cat-ears">
+    <img src="../images/ui/vector 26.svg" alt="" class="ears-svg">
+  </div>
+
+  <!-- TITLE + SPEECH BUBBLE -->
+  <div class="hero">
+    <div class="title-row">
+      <div class="title-text">
+        <h1>Probablyy a cat</h1>
+        <p class="subtitle">take a quick photo of yourself and answer some questions to match with a cat</p>
+      </div>
+      <div class="speech-bubble">
+        <img src="../images/ui/purr.svg" alt="Purr!" class="purr-svg">
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 1: 2 CATS LEFT/RIGHT -->
+  <div class="cat-row row1">
+    <div class="cat-card cat-r1-left"><img src="../images/cats/tabby.JPG" alt="cat" onerror="this.style.display='none'"></div>
+    <div class="cat-card cat-r1-right"><img src="../images/cats/americanshorthair.JPG" alt="cat" onerror="this.style.display='none'"></div>
+  </div>
+
+  <!-- ROW 2: 1 CENTER -->
+  <div class="cat-row row2">
+    <div class="cat-card cat-r2-center"><img src="../images/cats/britishshorthair.JPG" alt="cat" onerror="this.style.display='none'"></div>
+  </div>
+
+  <!-- ROW 3: 2 CATS LEFT/RIGHT -->
+  <div class="cat-row row3">
+    <div class="cat-card cat-r3-left"><img src="../images/cats/maincoon.JPG" alt="cat" onerror="this.style.display='none'"></div>
+    <div class="cat-card cat-r3-right"><img src="../images/cats/birman.JPG" alt="cat" onerror="this.style.display='none'"></div>
+  </div>
+
+  <!-- ROW 4: BOTTOM 2 HALF CUT OFF -->
+  <div class="cat-row row4">
+    <div class="cat-card cat-r4-left"><img src="../images/cats/ragdoll.JPG" alt="cat" onerror="this.style.display='none'"></div>
+    <div class="cat-card cat-r4-right"><img src="../images/cats/tuxedo.JPG" alt="cat" onerror="this.style.display='none'"></div>
+  </div>
+
+  <!-- SLIDE BUTTON -->
+  <div class="btn-wrap">
+    <div class="slider-track" id="sliderTrack">
+      <div class="slider-fill" id="sliderFill"></div>
+      <div class="slider-label" id="sliderLabel">Start Journey</div>
+      <div class="slider-thumb" id="sliderThumb">
+        <img src="../images/ui/paw.png" alt="paw" style="width:55%; height:55%; object-fit:contain;">
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
