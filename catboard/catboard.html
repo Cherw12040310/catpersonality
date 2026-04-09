@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probablyy a cat — Purr Board</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/shared.css">
+  <link rel="stylesheet" href="catboard.css">
+</head>
+<body>
+
+  <img src="../images/ui/1.svg" class="bg-image" alt="">
+
+  <div class="page">
+
+    <div class="title-section">
+      <p class="board-title">Do you have a cat already?</p>
+      <p class="board-subtitle">Add your cute cat's picture here to join our purr friends!</p>
+    </div>
+
+    <div class="board-wrap">
+      <div class="board" id="board">
+        <p class="loading-text" id="loadingText">loading purr board...</p>
+        <div class="empty-state" id="emptyState" style="display:none">
+          <p>no cats yet! be the first to add yours 🐾</p>
+        </div>
+      </div>
+
+      <button class="add-btn" id="addBtn" aria-label="Add cat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+    </div>
+
+    <button class="continue-btn" id="continueBtn">continue</button>
+
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <p class="modal-title">add your cat 🐱</p>
+      <div class="upload-area" id="uploadArea">
+        <img class="upload-preview" id="uploadPreview" alt="">
+        <div class="upload-placeholder" id="uploadPlaceholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span>tap to upload photo</span>
+        </div>
+      </div>
+      <input type="file" id="fileInput" accept="image/*">
+      <input class="note-input" id="noteInput" type="text" placeholder="add a note about your cat..." maxlength="40">
+      <div class="modal-btn-row">
+        <button class="modal-cancel" id="cancelBtn">cancel</button>
+        <button class="modal-submit" id="submitBtn">post to board</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="catboard.js"></script>
+
+</body>
+</html>

@@ -1,6 +1,5 @@
 :root {
-  --text: #f0ece8;
-  --muted: #7a7672;
+  --text: #111;
 }
 
 .screen {
@@ -35,28 +34,38 @@
 }
 
 .question-card {
-  background: #111;
+  background: #EEEEEE;
   border-radius: clamp(20px, 4vw, 36px);
-    padding: 52px 44px;
+  border: none;
+  background-image: repeating-linear-gradient(0deg, #222, #222 15px, transparent 15px, transparent 29px),
+    repeating-linear-gradient(90deg, #222, #222 15px, transparent 15px, transparent 29px),
+    repeating-linear-gradient(180deg, #222, #222 15px, transparent 15px, transparent 29px),
+    repeating-linear-gradient(270deg, #222, #222 15px, transparent 15px, transparent 29px);
+  background-size: 2px 100%, 100% 2px, 2px 100%, 100% 2px;
+  background-position: 0 0, 0 0, 100% 0, 0 100%;
+  background-repeat: no-repeat;
+  padding: 32px 24px;
   width: 100%;
+  height: 100%;
   max-width: clamp(320px, 85vw, 680px);
   display: flex;
   flex-direction: column;
-  gap: 4vh;
+  gap: clamp(16px, 3vh, 28px);
 }
+
 
 /* ─── PROGRESS BAR ─── */
 .progress-bar {
   width: 100%;
-  height: clamp(6px, 1vw, 10px);
-  background: #333;
+  height: clamp(10px, 1.8vw, 16px);
+  background: #ccc;
   border-radius: 999px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: #6bc5c5;
+  background: #111;
   border-radius: 999px;
   transition: width 0.5s ease;
   width: 0%;
@@ -64,10 +73,10 @@
 
 /* ─── QUESTION TEXT ─── */
 .question-text {
-    font-family: 'Outfit', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: clamp(18px, 4vw, 44px);
   font-weight: 500;
-  color: #f0ece8;
+  color: #111;
   line-height: 1.3;
 }
 
@@ -75,7 +84,7 @@
 .answers-grid {
   display: flex;
   flex-direction: column;
-  gap: 3vh;
+  gap: 20px;
   width: 100%;
 }
 
@@ -92,19 +101,20 @@
   transition: opacity 0.2s ease, transform 0.15s ease;
 }
 
-.answer-btn:hover { opacity: 0.85; }
+.answer-btn:hover { opacity: 0.75; }
 .answer-btn:active { transform: scale(0.97); }
 
 .answer-num {
-    font-family: 'Outfit', sans-serif;
-  width: clamp(44px, 9vw, 80px);
-  height: clamp(44px, 9vw, 80px);
-  background: #f0ece8;
-  border-radius: clamp(10px, 2vw, 18px);
+  width: clamp(52px, 11vw, 88px);
+  height: clamp(52px, 11vw, 88px);
+  background: #fff;
+  border: 2px solid #111;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(14px, 3vw, 28px);
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(16px, 3.5vw, 32px);
   font-weight: 600;
   color: #111;
   flex-shrink: 0;
@@ -112,20 +122,20 @@
 }
 
 .answer-text {
-    font-family: 'Outfit', sans-serif;
-
-  font-size: clamp(14px, 3vw, 28px);
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(16px, 3.5vw, 32px);
   font-weight: 400;
-  color: #f0ece8;
+  color: #111;
   line-height: 1.4;
 }
 
 .answer-btn.selected .answer-num {
-  background: #888;
-  color: #f0ece8;
+  background: #111;
+  color: #fff;
+  border-color: #111;
   transform: scale(0.95);
 }
 
 .answer-btn.selected .answer-text {
-  color: #aaa;
+  color: #555;
 }

@@ -15,21 +15,32 @@
   <div class="progress-path" id="navPath"></div>
 
   <div class="page">
-    <div class="outer-card">
-      <p class="result-title" id="resultTitle">You are probably a...</p>
-      <div class="stack-wrap">
-        <div class="id-card">
-          <div class="id-card-header">
-            <h2 id="cardTitle">Cat ID card</h2>
-          </div>
-          <div class="id-card-body">
-            <img class="id-card-img" id="catImg" src="" alt="your cat">
-            <div class="id-card-traits" id="catTraits"></div>
-          </div>
+
+    <div class="title-wrap" id="titleWrap">
+      <p class="result-subtitle">You are match with a</p>
+      <h1 class="result-name" id="catName">...</h1>
+    </div>
+
+    <div class="card-stack" id="cardStack">
+
+      <div class="result-card personality-card" id="personalityCard">
+        <div class="personality-inner">
+          <p class="personality-label">lifestyle habits</p>
+          <div class="traits-list" id="traitsList"></div>
         </div>
       </div>
-      <button class="btn-primary" id="nextBtn">next</button>
+
+      <div class="result-card cat-card" id="catCard">
+        <div id="doodleLayer"></div>
+        <img class="cat-full-img" id="catImg" src="" alt="cat">
+      </div>
+
     </div>
+
+    <p class="swipe-hint" id="swipeHint">swipe to reveal</p>
+
+    <button class="continue-btn" id="continueBtn">continue</button>
+
   </div>
 
   <script src="../shared/shared.js"></script>

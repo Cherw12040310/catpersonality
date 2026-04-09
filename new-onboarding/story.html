@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probablyy a cat — Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: transparent;
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+    }
+
+    .bg-image {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .story-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 4vw, 40px);
+    }
+
+    .story-card {
+      background: #f2f0eb;
+      border-radius: clamp(24px, 5vw, 48px);
+      border: 2px solid #222;
+      width: 100%;
+      height: 100%;
+      max-width: clamp(320px, 85vw, 500px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── DOODLES ─── */
+    .doodle {
+      position: absolute;
+      opacity: 1;
+    }
+    .cat-img.center-bottom {
+  width: clamp(120px, 32vw, 220px);
+  bottom: 8%;
+  left: 20%;
+  right: auto;
+  transform: none;
+}
+
+.story-text.left-mid {
+  position: absolute;
+  left: clamp(16px, 5vw, 32px);
+  top: 55%;
+  transform: translateY(-50%);
+  font-size: clamp(13px, 3.2vw, 20px);
+  font-weight: 400;
+  color: #222;
+  line-height: 1.6;
+  max-width: 50%;
+}
+    /* ─── CAT ─── */
+    .cat-img {
+      position: absolute;
+      width: clamp(100px, 28vw, 200px);
+      bottom: 20%;
+      right: 8%;
+      opacity: 1;
+    }
+
+    /* Slide 4 cat house is bigger */
+    .cat-img.large {
+      width: clamp(160px, 45vw, 300px);
+  bottom: 18%;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+    }
+
+    /* ─── TEXT ─── */
+    .story-text {
+      position: absolute;
+      left: clamp(16px, 5vw, 32px);
+      top: 45%;
+      transform: translateY(-50%);
+      font-size: clamp(13px, 3.2vw, 20px);
+      font-weight: 400;
+      color: #222;
+      line-height: 1.6;
+      max-width: 48%;
+    }
+
+    .story-text.center {
+      left: 50%;
+      top: 38%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      max-width: 70%;
+    }
+
+    /* ─── DOTS ─── */
+    .dots {
+      position: absolute;
+      bottom: clamp(12px, 3vh, 24px);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: clamp(6px, 1.5vw, 12px);
+      z-index: 10;
+    }
+
+    .dot {
+      width: clamp(6px, 1.5vw, 10px);
+      height: clamp(6px, 1.5vw, 10px);
+      border-radius: 50%;
+      background: #bbb;
+      transition: background 0.3s ease;
+    }
+
+    .dot.active { background: #222; }
+
+    /* ─── TAP HINT ─── */
+    .tap-hint {
+      position: absolute;
+      bottom: clamp(32px, 6vh, 52px);
+      right: clamp(16px, 4vw, 28px);
+      font-size: clamp(10px, 2vw, 14px);
+      color: #aaa;
+      opacity: 1;
+    }
+
+    /* ─── ENTER HOME BUTTON (slide 4) ─── */
+    .enter-btn {
+      position: absolute;
+      bottom: clamp(48px, 10vh, 80px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 2px solid #222;
+      border-radius: 999px;
+      padding: clamp(12px, 2vh, 20px) clamp(32px, 8vw, 60px);
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(14px, 3vw, 22px);
+      font-weight: 500;
+      color: #222;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s ease;
+      display: none;
+    }
+
+    .enter-btn:hover  { background: #e8e8e8; }
+    .enter-btn:active { background: #c8c8c8; }
+
+    /* ─── SLIDE TRANSITION ─── */
+  </style>
+</head>
+<body>
+
+  <img src="../images/ui/1.svg" class="bg-image" alt="">
+
+  <div class="story-screen" id="storyScreen">
+    <div class="story-card" id="storyCard">
+
+      <!-- Doodles injected by JS -->
+      <div id="doodleLayer"></div>
+
+      <!-- Cat injected by JS -->
+      <img class="cat-img" id="catImg" src="" alt="cat">
+
+      <!-- Text -->
+      <p class="story-text" id="storyText"></p>
+
+      <!-- Tap hint -->
+      <span class="tap-hint" id="tapHint">tap to continue →</span>
+
+      <!-- Enter home button (slide 4 only) -->
+      <button class="enter-btn" id="enterBtn">Enter home</button>
+
+      <!-- Dots -->
+      <div class="dots" id="dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  const BASE = '../images/onboarding-ui/';
+
+  const SLIDES = [
+    {
+      lines: ["Too bright, too fast,", "too many thoughts..."],
+      cat: 'cat screen one.svg',
+      catClass: '',
+      doodles: [
+        { src: 'swirl one.svg',   style: 'width:10vw;max-width:80px;top:8%;left:28%;' },
+        { src: 'swirl two.svg',   style: 'width:10vw;max-width:80px;top:50%;left:50%;transform:translate(-50%,-50%);' },
+        { src: 'swirl three.svg', style: 'width:10vw;max-width:80px;top:80%;left:30%;transform:translate(-50%,-50%);' },
+        { src: 'line one.svg',    style: 'width:14vw;max-width:110px;top:30%;right:8%;' },
+        { src: 'line one.svg',    style: 'width:14vw;max-width:110px;top:50%;left:10%;' },
+        { src: 'line two.svg',    style: 'width:12vw;max-width:95px;top:15%;left:5%;' },
+        { src: 'line two.svg',    style: 'width:12vw;max-width:95px;bottom:30%;right:5%;' },
+      ],
+      textClass: '',
+      tapHint: true,
+      enterBtn: false
+    },
+    {
+  lines: ["Shall we find a space", "where we can just... be..."],
+  cat: 'cat screen two.svg',
+  catClass: 'center-bottom',
+  doodles: [
+    { src: 'heart one.svg', style: 'width:8vw;max-width:55px;top:8%;left:18%;' },
+    { src: 'heart 3.svg',   style: 'width:7vw;max-width:52px;top:10%;right:12%;' },
+    { src: 'heart 2.svg',   style: 'width:7vw;max-width:52px;top:38%;right:8%;' },
+    { src: 'heart one.svg', style: 'width:7vw;max-width:50px;bottom:18%;left:10%;' },
+    { src: 'heart 3.svg',   style: 'width:6vw;max-width:48px;bottom:8%;left:18%;' },
+{ src: 'thinking.svg', style: 'width:28vw;max-width:200px;bottom:28%;right:7%;' },  ],
+  textClass: 'left-mid',
+  tapHint: true,
+  enterBtn: false
+},
+    {
+  lines: ["cozy and safe, no worries, no thoughts"],
+  cat: 'cat screen three.svg',
+  catClass: 'large',
+  doodles: [
+    { src: 'heart one.svg', style: 'width:8vw;max-width:55px;top:10%;left:18%;' },
+    { src: 'sparkle.svg',   style: 'width:6vw;max-width:45px;top:12%;left:42%;' },
+    { src: 'heart 3.svg',   style: 'width:7vw;max-width:52px;top:18%;right:12%;' },
+    { src: 'heart one.svg', style: 'width:6vw;max-width:48px;bottom:28%;right:8%;' },
+    { src: 'sparkle 2.svg', style: 'width:6vw;max-width:44px;bottom:22%;left:10%;' },
+  ],
+  textClass: 'center',
+  tapHint: true,
+  enterBtn: false
+},
+    {
+  lines: ["WELCOME TO THE PURR HOUSE,", "a companion of the purr", "is waiting to meet you"],
+  cat: 'purr house.svg',
+  catClass: 'large',
+  doodles: [
+    { src: 'cloud 1.svg', style: 'width:18vw;max-width:130px;top:5%;left:5%;' },
+    { src: 'cloud 2.svg', style: 'width:16vw;max-width:120px;top:5%;right:5%;' },
+    { src: 'cloud 1.svg', style: 'width:14vw;max-width:100px;top:12%;left:40%;transform:translateX(-50%);' },
+  ],
+  textClass: 'center',
+  tapHint: false,
+  enterBtn: true
+}
+  ];
+
+  let current = 0;
+
+  function renderSlide(index) {
+    const slide = SLIDES[index];
+
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === index);
+    });
+
+    const catEl = document.getElementById('catImg');
+    catEl.src = BASE + slide.cat;
+    catEl.className = 'cat-img' + (slide.catClass ? ' ' + slide.catClass : '');
+
+    const doodleLayer = document.getElementById('doodleLayer');
+    doodleLayer.innerHTML = '';
+    slide.doodles.forEach(d => {
+      const img = document.createElement('img');
+      img.src = BASE + d.src;
+      img.className = 'doodle';
+      img.style.cssText = d.style;
+      img.alt = '';
+      doodleLayer.appendChild(img);
+    });
+
+    const textEl = document.getElementById('storyText');
+    textEl.innerHTML = '';
+    textEl.className = 'story-text' + (slide.textClass ? ' ' + slide.textClass : '');
+    slide.lines.forEach(line => {
+      const div = document.createElement('div');
+      div.textContent = line;
+      textEl.appendChild(div);
+    });
+
+    document.getElementById('tapHint').style.display = slide.tapHint ? 'block' : 'none';
+    document.getElementById('enterBtn').style.display = slide.enterBtn ? 'block' : 'none';
+  }
+
+  renderSlide(0);
+
+  document.getElementById('storyScreen').addEventListener('click', (e) => {
+    if (e.target.id === 'enterBtn') return;
+    if (current < SLIDES.length - 1) {
+      current++;
+      renderSlide(current);
+    }
+  });
+
+  document.getElementById('enterBtn').addEventListener('click', () => {
+    window.location.href = 'entering.html';
+  });
+</script>
+  
+</body>
+</html>

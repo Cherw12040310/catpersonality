@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entering home...</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: transparent;
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .bg-image {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ─── SCENE ─── */
+    .scene {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── SVG PATH ─── */
+    .path-svg {
+      width: 90vw;
+      max-width: 500px;
+      height: auto;
+    }
+
+    /* Dashed path */
+    .path-line {
+      fill: none;
+      stroke: #222;
+      stroke-width: 4;
+      stroke-dasharray: 12 8;
+      stroke-linecap: round;
+    }
+
+    /* ─── CAT ─── */
+    .cat-wrap {
+      position: absolute;
+      width: clamp(60px, 14vw, 100px);
+      height: clamp(60px, 14vw, 100px);
+    }
+
+    .cat-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* ─── TEXT ─── */
+    .entering-text {
+      position: absolute;
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(13px, 3vw, 20px);
+      font-weight: 400;
+      color: #333;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      animation: fadeIn 0.6s 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ─── FADE OUT ─── */
+    .scene.fade-out {
+      animation: fadeOut 0.6s ease forwards;
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to   { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <img src="../images/ui/1.svg" class="bg-image" alt="">
+
+  <div class="scene" id="scene">
+
+    <!-- SVG curved path -->
+    <svg class="path-svg" id="pathSvg" viewBox="0 0 500 160" xmlns="http://www.w3.org/2000/svg">
+      <path
+        id="curvePath"
+        class="path-line"
+        d="M 20 100 C 80 20, 140 140, 220 80 S 380 20, 480 80"
+      />
+    </svg>
+
+    <!-- Cat that moves along path -->
+    <div class="cat-wrap" id="catWrap">
+      <img src="../images/onboarding-ui/loadingcat.png" alt="cat">
+    </div>
+
+    <!-- Text below path -->
+    <p class="entering-text" id="enteringText">entering home....</p>
+
+  </div>
+
+<script>
+  const path     = document.getElementById('curvePath');
+  const catWrap  = document.getElementById('catWrap');
+  const scene    = document.getElementById('scene');
+  const pathSvg  = document.getElementById('pathSvg');
+
+  let startTime  = null;
+  const DURATION = 2800; // ms to travel full path
+
+  function positionText() {
+    const text = document.getElementById('enteringText');
+    const svgRect = pathSvg.getBoundingClientRect();
+    text.style.position = 'fixed';
+    text.style.top  = (svgRect.top + svgRect.height + 16) + 'px';
+    text.style.left = '50%';
+    text.style.transform = 'translateX(-50%)';
+  }
+
+  function animate(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / DURATION, 1);
+
+    // Get point along path
+    const pathLength = path.getTotalLength();
+    const point = path.getPointAtLength(progress * pathLength);
+
+    // Get next point for rotation
+    const nextPoint = path.getPointAtLength(Math.min((progress + 0.01) * pathLength, pathLength));
+    const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * (180 / Math.PI);
+
+    // Convert SVG coords to screen coords
+    const svgRect = pathSvg.getBoundingClientRect();
+    const svgEl   = pathSvg;
+    const viewBox = svgEl.viewBox.baseVal;
+
+    const scaleX  = svgRect.width  / viewBox.width;
+    const scaleY  = svgRect.height / viewBox.height;
+
+    const screenX = svgRect.left + point.x * scaleX;
+    const screenY = svgRect.top  + point.y * scaleY;
+
+    const catSize = catWrap.offsetWidth;
+
+    catWrap.style.position  = 'fixed';
+    catWrap.style.left      = (screenX - catSize / 2) + 'px';
+    catWrap.style.top       = (screenY - catSize / 2) + 'px';
+    catWrap.style.transform = `rotate(${angle}deg)`;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      // Navigate after short pause
+      scene.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = '../new-onboarding/confirm.html';
+      }, 700);
+    }
+  }
+
+  // Wait a beat then start animation
+  positionText();
+  setTimeout(() => requestAnimationFrame(animate), 600);
+
+</script>
+
+</body>
+</html>
