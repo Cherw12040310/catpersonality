@@ -86,4 +86,5 @@ jspm_packages/
 # Backend specific - User uploaded files
 uploads/*
 !uploads/.gitkeep
-cats.json
+.env
+.env.example
