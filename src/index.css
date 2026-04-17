@@ -1,0 +1,65 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: transparent;
+  overflow: hidden;
+  font-family: 'Outfit', sans-serif;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.bg-image {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ─── SCATTERED PAWS ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: 
+    url('/images/ui/pawpink.png'),
+    url('/images/ui/pawblue.png'),
+    url('/images/ui/pawpink.png'),
+    url('/images/ui/pawblue.png'),
+    url('/images/ui/pawpink.png'),
+    url('/images/ui/pawblue.png'),
+    url('/images/ui/pawpink.png'),
+    url('/images/ui/pawblue.png'),
+    url('/images/ui/pawpink.png'),
+    url('/images/ui/pawblue.png');
+  background-size: 
+    20px, 18px, 16px, 22px, 18px,
+    20px, 16px, 22px, 18px, 20px;
+  background-repeat: no-repeat;
+  background-position:
+    8%  15%,
+    72% 28%,
+    28% 42%,
+    58% 55%,
+    58% 4%  68%,
+    85% 38%,
+    42% 78%,
+    15% 88%,
+    65% 82%,
+    50% 95%;
+  opacity: 0.6;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}

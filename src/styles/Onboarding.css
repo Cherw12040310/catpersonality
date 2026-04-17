@@ -1,0 +1,533 @@
+/* Story Screen Styles */
+.story-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 4vw, 40px);
+    cursor: pointer;
+}
+
+.story-card {
+    background: #f2f0eb;
+    border-radius: clamp(24px, 5vw, 48px);
+    border: 2px solid #222;
+    width: 100%;
+    height: 100%;
+    max-width: clamp(320px, 85vw, 500px);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Doodles */
+.doodle {
+    position: absolute;
+    opacity: 1;
+}
+
+.cat-img.center-bottom {
+    width: clamp(120px, 32vw, 220px);
+    bottom: 8%;
+    left: 20%;
+    right: auto;
+    transform: none;
+}
+
+.story-text.left-mid {
+    position: absolute;
+    left: clamp(16px, 5vw, 32px);
+    top: 55%;
+    transform: translateY(-50%);
+    font-size: clamp(13px, 3.2vw, 20px);
+    font-weight: 400;
+    color: #222;
+    line-height: 1.6;
+    max-width: 50%;
+}
+
+/* Cat */
+.cat-img {
+    position: absolute;
+    width: clamp(100px, 28vw, 200px);
+    bottom: 20%;
+    right: 8%;
+    opacity: 1;
+}
+
+.cat-img.large {
+    width: clamp(160px, 45vw, 300px);
+    bottom: 18%;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+}
+
+/* Text */
+.story-text {
+    position: absolute;
+    left: clamp(16px, 5vw, 32px);
+    top: 45%;
+    transform: translateY(-50%);
+    font-size: clamp(13px, 3.2vw, 20px);
+    font-weight: 400;
+    color: #222;
+    line-height: 1.6;
+    max-width: 48%;
+}
+
+.story-text.center {
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    max-width: 70%;
+}
+
+/* Dots */
+.dots {
+    position: absolute;
+    bottom: clamp(12px, 3vh, 24px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: clamp(6px, 1.5vw, 12px);
+    z-index: 10;
+}
+
+.dot {
+    width: clamp(6px, 1.5vw, 10px);
+    height: clamp(6px, 1.5vw, 10px);
+    border-radius: 50%;
+    background: #bbb;
+    transition: background 0.3s ease;
+}
+
+.dot.active {
+    background: #222;
+}
+
+/* Tap Hint */
+.tap-hint {
+    position: absolute;
+    bottom: clamp(32px, 6vh, 52px);
+    right: clamp(16px, 4vw, 28px);
+    font-size: clamp(10px, 2vw, 14px);
+    color: #aaa;
+    opacity: 1;
+}
+
+/* Enter Home Button */
+.enter-btn {
+    position: absolute;
+    bottom: clamp(48px, 10vh, 80px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 2px solid #222;
+    border-radius: 999px;
+    padding: clamp(12px, 2vh, 20px) clamp(32px, 8vw, 60px);
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(14px, 3vw, 22px);
+    font-weight: 500;
+    color: #222;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+}
+
+.enter-btn:hover {
+    background: #e8e8e8;
+}
+
+.enter-btn:active {
+    background: #c8c8c8;
+}
+
+/* Entering Screen Styles */
+.scene {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.path-svg {
+    width: 90vw;
+    max-width: 500px;
+    height: auto;
+}
+
+.path-line {
+    fill: none;
+    stroke: #222;
+    stroke-width: 4;
+    stroke-dasharray: 12 8;
+    stroke-linecap: round;
+}
+
+.cat-wrap {
+    position: absolute;
+    width: clamp(60px, 14vw, 100px);
+    height: clamp(60px, 14vw, 100px);
+}
+
+.cat-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.entering-text {
+    position: absolute;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(13px, 3vw, 20px);
+    font-weight: 400;
+    color: #333;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeIn 0.6s 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.scene.fade-out {
+    animation: fadeOut 0.6s ease forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+/* Confirm Screen Styles - Using shared styles from shared.css */
+
+.card-wrap {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 4vw, 40px);
+    padding-top: clamp(100px, 18vh, 180px);
+}
+
+/* ─── RESPONSIVE BREAKPOINTS ─── */
+
+/* Small phones (320px - 480px) */
+@media (max-width: 480px) {
+    .story-screen {
+        padding: 12px;
+    }
+
+    .story-card {
+        border-radius: 16px;
+        max-width: 95vw;
+    }
+
+    .cat-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .cat-img.large {
+        width: 140px;
+        height: 140px;
+    }
+
+    .story-text {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .doodle {
+        max-width: 60px;
+    }
+
+    .dots {
+        bottom: 12px;
+    }
+
+    .dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    .tap-hint {
+        font-size: 10px;
+        bottom: 20px;
+        right: 12px;
+    }
+
+    .enter-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+        bottom: 30px;
+    }
+
+    .scene {
+        padding: 12px;
+    }
+
+    .path-svg {
+        width: 90vw;
+    }
+
+    .cat-wrap {
+        width: 50px;
+        height: 50px;
+    }
+
+    .entering-text {
+        font-size: 12px;
+    }
+}
+
+/* Large phones / Small tablets (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .story-screen {
+        padding: 16px 20px;
+    }
+
+    .story-card {
+        border-radius: 20px;
+        max-width: 90vw;
+    }
+
+    .cat-img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .cat-img.large {
+        width: 180px;
+        height: 180px;
+    }
+
+    .story-text {
+        font-size: 16px;
+    }
+
+    .doodle {
+        max-width: 70px;
+    }
+
+    .dots {
+        bottom: 16px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .tap-hint {
+        font-size: 12px;
+        bottom: 24px;
+        right: 16px;
+    }
+
+    .enter-btn {
+        padding: 12px 24px;
+        font-size: 16px;
+        bottom: 40px;
+    }
+
+    .scene {
+        padding: 16px;
+    }
+
+    .path-svg {
+        width: 85vw;
+    }
+
+    .cat-wrap {
+        width: 60px;
+        height: 60px;
+    }
+
+    .entering-text {
+        font-size: 14px;
+    }
+}
+
+/* Tablets (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .story-screen {
+        padding: 32px 64px;
+    }
+
+    .story-card {
+        border-radius: 32px;
+        max-width: 75vw;
+    }
+
+    .cat-img {
+        width: 220px;
+        height: 220px;
+    }
+
+    .cat-img.large {
+        width: 340px;
+        height: 340px;
+    }
+
+    .story-text {
+        font-size: 26px;
+        line-height: 1.5;
+    }
+
+    .doodle {
+        max-width: 120px;
+    }
+
+    .dots {
+        bottom: 28px;
+    }
+
+    .dot {
+        width: 14px;
+        height: 14px;
+    }
+
+    .tap-hint {
+        font-size: 18px;
+        bottom: 36px;
+        right: 28px;
+    }
+
+    .enter-btn {
+        padding: 18px 48px;
+        font-size: 22px;
+        bottom: 70px;
+    }
+
+    .scene {
+        padding: 32px;
+    }
+
+    .path-svg {
+        width: 70vw;
+        max-width: 700px;
+    }
+
+    .cat-wrap {
+        width: 90px;
+        height: 90px;
+    }
+
+    .entering-text {
+        font-size: 20px;
+    }
+}
+
+/* Landscape orientations */
+@media (max-height: 600px) and (orientation: landscape) {
+    .story-screen {
+        padding: 12px 16px;
+    }
+
+    .story-card {
+        border-radius: 16px;
+        max-height: 80vh;
+    }
+
+    .cat-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cat-img.large {
+        width: 120px;
+        height: 120px;
+    }
+
+    .story-text {
+        font-size: 14px;
+    }
+
+    .doodle {
+        max-width: 50px;
+    }
+
+    .enter-btn {
+        bottom: 20px;
+    }
+
+    .scene {
+        padding: 12px;
+    }
+
+    .path-svg {
+        width: 70vw;
+    }
+
+    .cat-wrap {
+        width: 40px;
+        height: 40px;
+    }
+
+    .entering-text {
+        font-size: 12px;
+    }
+}
+
+.card-icon img {
+    width: 120px;
+    height: 120px;
+}
+
+.card {
+    background: #111;
+    border-radius: clamp(20px, 4vw, 40px);
+    padding: clamp(48px, 8vw, 80px) clamp(24px, 4.5vw, 52px);
+    width: 100%;
+    max-width: clamp(300px, 80vw, 600px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 3.5vh, 40px);
+    opacity: 0;
+    animation: popUp 0.5s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.card-text {
+    font-size: clamp(16px, 3.8vw, 36px);
+    font-weight: 400;
+    color: #f0ece8;
+    text-align: center;
+    line-height: 1.5;
+    max-width: clamp(220px, 60vw, 480px);
+}
+
+@media (max-width: 375px) {
+    .card {
+        padding: 24px 20px;
+        gap: 16px;
+    }
+
+    .card-text {
+        font-size: 4.2vw;
+    }
+}
+
+@media (min-width: 1400px) and (orientation: portrait) {
+    .card {
+        max-width: 700px;
+    }
+}

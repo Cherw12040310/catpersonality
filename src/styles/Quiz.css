@@ -1,0 +1,278 @@
+:root {
+    --text: #111;
+}
+
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 4vw, 40px);
+    padding-top: clamp(120px, 20vh, 200px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(30px);
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+.screen.exit {
+    opacity: 0;
+    transform: translateY(-30px);
+}
+
+#questionScreen {
+    justify-content: flex-start;
+    gap: 0;
+}
+
+.question-card {
+    background: #EEEEEE;
+    border-radius: clamp(20px, 4vw, 36px);
+    border: none;
+    background-image: repeating-linear-gradient(0deg, #222, #222 15px, transparent 15px, transparent 29px),
+        repeating-linear-gradient(90deg, #222, #222 15px, transparent 15px, transparent 29px),
+        repeating-linear-gradient(180deg, #222, #222 15px, transparent 15px, transparent 29px),
+        repeating-linear-gradient(270deg, #222, #222 15px, transparent 15px, transparent 29px);
+    background-size: 2px 100%, 100% 2px, 2px 100%, 100% 2px;
+    background-position: 0 0, 0 0, 100% 0, 0 100%;
+    background-repeat: no-repeat;
+    padding: 32px 24px;
+    width: 100%;
+    height: 100%;
+    max-width: clamp(320px, 85vw, 680px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 3vh, 28px);
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar {
+    width: 100%;
+    height: clamp(10px, 1.8vw, 16px);
+    background: #ccc;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #111;
+    border-radius: 999px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+/* ─── QUESTION TEXT ─── */
+.question-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(18px, 4vw, 44px);
+    font-weight: 500;
+    color: #111;
+    line-height: 1.3;
+}
+
+/* ─── ANSWERS ─── */
+.answers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.answer-btn {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2.5vw, 24px);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+    width: 100%;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.answer-btn:hover {
+    opacity: 0.75;
+}
+
+.answer-btn:active {
+    transform: scale(0.97);
+}
+
+.answer-num {
+    width: clamp(52px, 11vw, 88px);
+    height: clamp(52px, 11vw, 88px);
+    background: #fff;
+    border: 2px solid #111;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(16px, 3.5vw, 32px);
+    font-weight: 600;
+    color: #111;
+    flex-shrink: 0;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.answer-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(16px, 3.5vw, 32px);
+    font-weight: 400;
+    color: #111;
+    line-height: 1.4;
+}
+
+.answer-btn.selected .answer-num {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+    transform: scale(0.95);
+}
+
+.answer-btn.selected .answer-text {
+    color: #555;
+}
+
+/* ─── RESPONSIVE BREAKPOINTS ─── */
+
+/* Small phones (320px - 480px) */
+@media (max-width: 480px) {
+    .screen {
+        padding: 12px;
+        padding-top: 80px;
+    }
+
+    .question-card {
+        padding: 20px 16px;
+        gap: 12px;
+        max-width: 95vw;
+    }
+
+    .question-text {
+        font-size: 18px;
+        line-height: 1.4;
+    }
+
+    .answers-grid {
+        gap: 12px;
+    }
+
+    .answer-num {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .answer-text {
+        font-size: 14px;
+        line-height: 1.3;
+    }
+}
+
+/* Large phones / Small tablets (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .screen {
+        padding: 16px 20px;
+        padding-top: 100px;
+    }
+
+    .question-card {
+        padding: 24px 20px;
+        gap: 16px;
+        max-width: 90vw;
+    }
+
+    .question-text {
+        font-size: 22px;
+    }
+
+    .answers-grid {
+        gap: 16px;
+    }
+
+    .answer-num {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+
+    .answer-text {
+        font-size: 16px;
+    }
+}
+
+/* Tablets (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .screen {
+        padding: 32px 64px;
+        padding-top: 160px;
+    }
+
+    .question-card {
+        padding: 40px 32px;
+        gap: 28px;
+        max-width: 75vw;
+    }
+
+    .question-text {
+        font-size: 36px;
+        line-height: 1.4;
+    }
+
+    .answers-grid {
+        gap: 24px;
+    }
+
+    .answer-num {
+        width: 72px;
+        height: 72px;
+        font-size: 32px;
+    }
+
+    .answer-text {
+        font-size: 22px;
+        line-height: 1.4;
+    }
+}
+
+/* Landscape orientations */
+@media (max-height: 600px) and (orientation: landscape) {
+    .screen {
+        padding-top: 60px;
+        padding-bottom: 20px;
+    }
+
+    .question-card {
+        padding: 16px 20px;
+        gap: 12px;
+    }
+
+    .question-text {
+        font-size: 20px;
+    }
+
+    .answers-grid {
+        gap: 12px;
+    }
+
+    .answer-num {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+
+    .answer-text {
+        font-size: 15px;
+    }
+}

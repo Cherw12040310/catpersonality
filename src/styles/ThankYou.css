@@ -1,0 +1,292 @@
+/* Thank You Page Styles */
+
+.page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 40px);
+  padding-top: clamp(110px, 18vh, 180px);
+  padding-bottom: clamp(16px, 3vh, 40px);
+}
+
+.thank-you-card {
+  background: #111;
+  border-radius: clamp(20px, 4vw, 40px);
+  padding: clamp(48px, 8vw, 80px) clamp(24px, 4.5vw, 52px);
+  width: 100%;
+  height: auto;
+  max-width: clamp(320px, 85vw, 680px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 3.5vh, 36px);
+  opacity: 0;
+  animation: fadeIn 0.5s 0.1s ease forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.thank-you-icon {
+  width: clamp(80px, 15vw, 120px);
+  height: clamp(80px, 15vw, 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thank-you-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.thank-you-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(28px, 6vw, 56px);
+  font-weight: 700;
+  color: #f0ece8;
+  text-align: center;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.thank-you-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(16px, 3.5vw, 24px);
+  font-weight: 400;
+  color: #f0ece8;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.thank-you-subtext {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(14px, 3vw, 20px);
+  font-weight: 400;
+  color: #aaa;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2.5vh, 20px);
+  width: 100%;
+  max-width: 300px;
+}
+
+.cat-paws {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.paw {
+  position: absolute;
+  width: clamp(20px, 4vw, 32px);
+  height: clamp(20px, 4vw, 32px);
+  opacity: 0.1;
+  animation: float 3s ease-in-out infinite;
+}
+
+.paw-1 {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.paw-2 {
+  top: 20%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.paw-3 {
+  bottom: 15%;
+  left: 20%;
+  animation-delay: 2s;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-10px) rotate(5deg); 
+  }
+}
+
+/* Responsive Breakpoints */
+
+/* Small phones (320px - 480px) */
+@media (max-width: 480px) {
+  .page {
+    padding: 12px;
+    padding-top: 80px;
+  }
+  
+  .thank-you-card {
+    padding: 32px 20px;
+    gap: 16px;
+    max-width: 95vw;
+  }
+  
+  .thank-you-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .thank-you-title {
+    font-size: 24px;
+  }
+  
+  .thank-you-text {
+    font-size: 16px;
+  }
+  
+  .thank-you-subtext {
+    font-size: 14px;
+  }
+  
+  .button-group {
+    max-width: 250px;
+  }
+  
+  .paw {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Large phones / Small tablets (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .page {
+    padding: 16px 20px;
+    padding-top: 100px;
+  }
+  
+  .thank-you-card {
+    padding: 40px 28px;
+    gap: 20px;
+    max-width: 90vw;
+  }
+  
+  .thank-you-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .thank-you-title {
+    font-size: 32px;
+  }
+  
+  .thank-you-text {
+    font-size: 18px;
+  }
+  
+  .thank-you-subtext {
+    font-size: 16px;
+  }
+  
+  .button-group {
+    max-width: 280px;
+  }
+  
+  .paw {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Tablets (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .page {
+    padding: 24px 48px;
+    padding-top: 140px;
+  }
+  
+  .thank-you-card {
+    padding: 56px 40px;
+    gap: 28px;
+    max-width: 75vw;
+  }
+  
+  .thank-you-icon {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .thank-you-title {
+    font-size: 40px;
+  }
+  
+  .thank-you-text {
+    font-size: 22px;
+  }
+  
+  .thank-you-subtext {
+    font-size: 18px;
+  }
+  
+  .button-group {
+    max-width: 320px;
+  }
+  
+  .paw {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Landscape orientations */
+@media (max-height: 600px) and (orientation: landscape) {
+  .page {
+    padding-top: 60px;
+    padding-bottom: 20px;
+  }
+  
+  .thank-you-card {
+    padding: 24px 32px;
+    gap: 16px;
+  }
+  
+  .thank-you-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .thank-you-title {
+    font-size: 28px;
+  }
+  
+  .thank-you-text {
+    font-size: 16px;
+  }
+  
+  .thank-you-subtext {
+    font-size: 14px;
+  }
+  
+  .button-group {
+    max-width: 280px;
+  }
+}
