@@ -11,8 +11,13 @@ const PORT = process.env.PORT || 3001;
 // CORS configuration for development and production
 const corsOptions = {
     origin: function (origin, callback) {
+        console.log(`CORS check - Origin: ${origin}, NODE_ENV: ${process.env.NODE_ENV}`);
+
         // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
+        if (!origin) {
+            console.log('CORS: Allowing request with no origin');
+            return callback(null, true);
+        }
 
         // Allowed origins for development
         const allowedDevOrigins = [
@@ -27,18 +32,31 @@ const corsOptions = {
         // Production domain from environment variable
         const productionOrigin = process.env.PRODUCTION_ORIGIN;
 
-        if (process.env.NODE_ENV === 'development') {
+        // Default to development if NODE_ENV is not set
+        const nodeEnv = process.env.NODE_ENV || 'development';
+        console.log(`Using NODE_ENV: ${nodeEnv}`);
+
+        if (nodeEnv === 'development') {
             // In development, allow localhost origins
             if (allowedDevOrigins.includes(origin)) {
+                console.log(`CORS: Allowing ${origin} (development)`);
                 return callback(null, true);
+            } else {
+                console.log(`CORS: Rejecting ${origin} - not in allowed dev origins`);
+                console.log('Allowed origins:', allowedDevOrigins);
             }
         } else {
             // In production, allow specific production origin
             if (productionOrigin && origin === productionOrigin) {
+                console.log(`CORS: Allowing ${origin} (production)`);
                 return callback(null, true);
+            } else {
+                console.log(`CORS: Rejecting ${origin} - not production origin`);
+                console.log(`Production origin: ${productionOrigin}`);
             }
         }
 
+        console.log(`CORS: Rejecting ${origin} with error`);
         callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
@@ -47,6 +65,10 @@ const corsOptions = {
 };
 
 // Middleware
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - Origin: ${req.headers.origin || 'none'}`);
+    next();
+});
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -106,6 +128,7 @@ app.get('/api/test', (req, res) => {
 
 // List uploaded files
 app.get('/api/uploads', (req, res) => {
+    console.log("received request for uploads")
     try {
         const files = fs.readdirSync(uploadsDir);
         res.json({
@@ -136,10 +159,15 @@ app.get('/api/cats', (req, res) => {
 
 // POST a new cat
 app.post('/api/cats', upload.single('image'), (req, res) => {
+    console.log('POST /api/cats - Received request');
+    console.log('Request body:', { name: req.body.name, note: req.body.note, personality: req.body.personality });
+    console.log('Uploaded file:', req.file ? { filename: req.file.filename, size: req.file.size } : 'none');
+
     try {
         const { name, note, personality } = req.body;
 
         if (!name || !req.file) {
+            console.log('Validation failed - missing name or image');
             return res.status(400).json({ error: 'Name and image are required' });
         }
 

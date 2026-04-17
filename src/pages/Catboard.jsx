@@ -121,10 +121,12 @@ const Catboard = () => {
 
             if (!response.ok) {
                 const errorData = await response.json()
+                console.error('Error response:', errorData)
                 throw new Error(errorData.error || 'Failed to save cat')
             }
 
             const newCat = await response.json()
+            console.log('Success response:', newCat)
 
             // Close modal first
             setIsModalVisible(false)
@@ -139,7 +141,9 @@ const Catboard = () => {
                 await loadCats()
             }, 300)
         } catch (e) {
-            alert('could not save — try again!')
+            console.error('Upload error:', e)
+            console.error('Error message:', e.message)
+            alert(`could not save - ${e.message}`)
         } finally {
             setIsSubmitting(false)
         }
