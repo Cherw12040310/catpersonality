@@ -109,7 +109,6 @@ const Catboard = () => {
             formData.append('image', selectedImageFile)
             formData.append('name', catName.trim())
             formData.append('note', note.trim())
-            formData.append('personality', personality.trim())
 
             const response = await fetch(`${API_BASE_URL}/cats`, {
                 method: 'POST',
