@@ -132,7 +132,6 @@ const Catboard = () => {
             setSelectedImageFile(null)
             setCatName('')
             setNote('')
-            setPersonality('')
             setStickerSize(100)
 
             // Wait a bit for modal to close and image to be written to disk, then reload cats
