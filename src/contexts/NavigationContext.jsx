@@ -3,9 +3,9 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 const CAT_POSITIONS = {
     '/': 0,
     '/quiz': 0.33,
-    '/result': 0.60,
-    '/catboard': 0.75,
-    '/thank-you': 1.0,
+    '/result': 0.66,
+    '/catboard': 0.85,
+    '/final': 1.0,
 }
 
 const NavigationContext = createContext()

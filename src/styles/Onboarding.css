@@ -11,11 +11,11 @@
 
 .story-card {
     background: #f2f0eb;
-    border-radius: clamp(24px, 5vw, 48px);
+    border-radius: 50px;
     border: 2px solid #222;
-    width: 100%;
-    height: 100%;
-    max-width: clamp(320px, 85vw, 500px);
+    width: 90%;
+    height: 75%;
+    max-width: clamp(320px, 90vw, 580px);
     position: relative;
     overflow: hidden;
 }
@@ -37,13 +37,13 @@
 .story-text.left-mid {
     position: absolute;
     left: clamp(16px, 5vw, 32px);
-    top: 55%;
+    top: 45%;
     transform: translateY(-50%);
-    font-size: clamp(13px, 3.2vw, 20px);
+    font-size: 18px;
     font-weight: 400;
     color: #222;
     line-height: 1.6;
-    max-width: 50%;
+    max-width: 65%;
 }
 
 /* Cat */
@@ -56,8 +56,8 @@
 }
 
 .cat-img.large {
-    width: clamp(160px, 45vw, 300px);
-    bottom: 18%;
+    width: 20vh;
+    bottom: 22%;
     left: 50%;
     right: auto;
     transform: translateX(-50%);
@@ -69,19 +69,27 @@
     left: clamp(16px, 5vw, 32px);
     top: 45%;
     transform: translateY(-50%);
-    font-size: clamp(13px, 3.2vw, 20px);
+    font-size: 18px;
     font-weight: 400;
     color: #222;
     line-height: 1.6;
-    max-width: 48%;
+    max-width: 65%;
+}
+
+.story-text.center-mid {
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+    text-align: center;
+    max-width: 85%;
 }
 
 .story-text.center {
-    left: 50%;
-    top: 38%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    max-width: 70%;
+    left: clamp(16px, 5vw, 32px);
+    top: 30%;
+    transform: translateY(-50%);
+    text-align: left;
+    max-width: 85%;
 }
 
 /* Dots */
@@ -107,41 +115,47 @@
     background: #222;
 }
 
-/* Tap Hint */
-.tap-hint {
-    position: absolute;
-    bottom: clamp(32px, 6vh, 52px);
-    right: clamp(16px, 4vw, 28px);
-    font-size: clamp(10px, 2vw, 14px);
-    color: #aaa;
-    opacity: 1;
-}
-
 /* Enter Home Button */
 .enter-btn {
     position: absolute;
-    bottom: clamp(48px, 10vh, 80px);
+    bottom: clamp(24px, 5vh, 48px);
+    left: clamp(16px, 4vw, 32px);
+    right: clamp(16px, 4vw, 32px);
+}
+
+/* Story Nav Buttons */
+.story-nav {
+    position: fixed;
+    bottom: 4vh;
     left: 50%;
     transform: translateX(-50%);
-    background: #fff;
-    border: 2px solid #222;
-    border-radius: 999px;
-    padding: clamp(12px, 2vh, 20px) clamp(32px, 8vw, 60px);
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(14px, 3vw, 22px);
-    font-weight: 500;
-    color: #222;
+    display: flex;
+    gap: 65vw;
+    z-index: 20;
+}
+
+.story-nav-btn {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(4px, 0.8vh, 8px);
     cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.2s ease;
+    padding: 0;
 }
 
-.enter-btn:hover {
-    background: #e8e8e8;
+.story-nav-btn img {
+    width: clamp(36px, 9vw, 56px);
+    height: clamp(36px, 9vw, 56px);
+    object-fit: contain;
 }
 
-.enter-btn:active {
-    background: #c8c8c8;
+.story-nav-btn span {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(11px, 2.5vw, 15px);
+    font-weight: 500;
+    color: #111;
 }
 
 /* Entering Screen Styles */
@@ -169,9 +183,10 @@
 }
 
 .cat-wrap {
-    position: absolute;
+    position: fixed;
     width: clamp(60px, 14vw, 100px);
     height: clamp(60px, 14vw, 100px);
+    z-index: 10;
 }
 
 .cat-wrap img {
@@ -181,24 +196,14 @@
 }
 
 .entering-text {
-    position: absolute;
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(13px, 3vw, 20px);
-    font-weight: 400;
-    color: #333;
-    letter-spacing: 0.05em;
-    opacity: 0;
-    animation: fadeIn 0.6s 0.5s ease forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    font-size: 25px;
+    font-weight: 500;
+    color: #111;
+    opacity: 1;
+    z-index: 5;
+    margin-top: clamp(24px, 5vh, 48px);
+    text-align: center;
 }
 
 .scene.fade-out {
@@ -206,25 +211,8 @@
 }
 
 @keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
-}
-
-/* Confirm Screen Styles - Using shared styles from shared.css */
-
-.card-wrap {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(16px, 4vw, 40px);
-    padding-top: clamp(100px, 18vh, 180px);
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
 
 /* ─── RESPONSIVE BREAKPOINTS ─── */
@@ -241,8 +229,8 @@
     }
 
     .cat-img {
-        width: 100px;
-        height: 100px;
+        width: 40%;
+        height: 50%;
     }
 
     .cat-img.large {
@@ -251,7 +239,6 @@
     }
 
     .story-text {
-        font-size: 14px;
         line-height: 1.4;
     }
 
@@ -268,33 +255,13 @@
         height: 6px;
     }
 
-    .tap-hint {
-        font-size: 10px;
-        bottom: 20px;
-        right: 12px;
-    }
-
     .enter-btn {
-        padding: 10px 20px;
-        font-size: 14px;
         bottom: 30px;
-    }
-
-    .scene {
-        padding: 12px;
-    }
-
-    .path-svg {
-        width: 90vw;
     }
 
     .cat-wrap {
         width: 50px;
         height: 50px;
-    }
-
-    .entering-text {
-        font-size: 12px;
     }
 }
 
@@ -306,21 +273,15 @@
 
     .story-card {
         border-radius: 20px;
-        max-width: 90vw;
     }
 
     .cat-img {
-        width: 120px;
-        height: 120px;
+        width: 220px;
     }
 
     .cat-img.large {
-        width: 180px;
-        height: 180px;
-    }
-
-    .story-text {
-        font-size: 16px;
+        width: 280px;
+        height: 250px;
     }
 
     .doodle {
@@ -336,20 +297,8 @@
         height: 8px;
     }
 
-    .tap-hint {
-        font-size: 12px;
-        bottom: 24px;
-        right: 16px;
-    }
-
     .enter-btn {
-        padding: 12px 24px;
-        font-size: 16px;
         bottom: 40px;
-    }
-
-    .scene {
-        padding: 16px;
     }
 
     .path-svg {
@@ -359,10 +308,6 @@
     .cat-wrap {
         width: 60px;
         height: 60px;
-    }
-
-    .entering-text {
-        font-size: 14px;
     }
 }
 
@@ -374,7 +319,6 @@
 
     .story-card {
         border-radius: 32px;
-        max-width: 75vw;
     }
 
     .cat-img {
@@ -383,12 +327,11 @@
     }
 
     .cat-img.large {
-        width: 340px;
-        height: 340px;
+        width: 240px;
+        height: 240px;
     }
 
     .story-text {
-        font-size: 26px;
         line-height: 1.5;
     }
 
@@ -405,20 +348,8 @@
         height: 14px;
     }
 
-    .tap-hint {
-        font-size: 18px;
-        bottom: 36px;
-        right: 28px;
-    }
-
     .enter-btn {
-        padding: 18px 48px;
-        font-size: 22px;
         bottom: 70px;
-    }
-
-    .scene {
-        padding: 32px;
     }
 
     .path-svg {
@@ -429,10 +360,6 @@
     .cat-wrap {
         width: 90px;
         height: 90px;
-    }
-
-    .entering-text {
-        font-size: 20px;
     }
 }
 
@@ -457,20 +384,12 @@
         height: 120px;
     }
 
-    .story-text {
-        font-size: 14px;
-    }
-
     .doodle {
         max-width: 50px;
     }
 
     .enter-btn {
         bottom: 20px;
-    }
-
-    .scene {
-        padding: 12px;
     }
 
     .path-svg {
@@ -481,15 +400,18 @@
         width: 40px;
         height: 40px;
     }
+}
 
-    .entering-text {
-        font-size: 12px;
-    }
+/* Confirm Screen */
+.card-icon {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .card-icon img {
-    width: 120px;
-    height: 120px;
+    width: 180px;
+    height: 180px;
 }
 
 .card {
@@ -497,7 +419,7 @@
     border-radius: clamp(20px, 4vw, 40px);
     padding: clamp(48px, 8vw, 80px) clamp(24px, 4.5vw, 52px);
     width: 100%;
-    max-width: clamp(300px, 80vw, 600px);
+    max-width: clamp(300px, 90vw, 680px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -507,22 +429,18 @@
 }
 
 .card-text {
-    font-size: clamp(16px, 3.8vw, 36px);
+    font-size: 20px;
     font-weight: 400;
     color: #f0ece8;
     text-align: center;
     line-height: 1.5;
-    max-width: clamp(220px, 60vw, 480px);
+    max-width: clamp(220px, 75vw, 560px);
 }
 
 @media (max-width: 375px) {
     .card {
         padding: 24px 20px;
         gap: 16px;
-    }
-
-    .card-text {
-        font-size: 4.2vw;
     }
 }
 

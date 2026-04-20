@@ -3,18 +3,19 @@
     inset: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
+    align-items: stretch;
     padding: clamp(16px, 4vw, 32px);
-    padding-top: clamp(110px, 18vh, 180px);
-    padding-bottom: clamp(80px, 14vh, 120px);
-    gap: clamp(12px, 2.5vh, 20px);
+    padding-top: clamp(16px, 3vh, 32px);
+    padding-bottom: clamp(120px, 20vh, 180px);
+    gap: clamp(10px, 1.8vh, 16px);
+    overflow-y: auto;
 }
 
 .title-wrap {
-    text-align: center;
+    text-align: left;
     opacity: 0;
-    animation: fadeUp 0.5s 0.1s ease forwards;
+    animation: fadeUp 0.5s 0.35s ease forwards;
+    width: 100%;
 }
 
 .result-subtitle {
@@ -30,19 +31,35 @@
     margin-top: 2px;
 }
 
+.result-funfact {
+    font-size: clamp(13px, 3vw, 20px);
+    font-weight: 400;
+    color: #111;
+    line-height: 1.6;
+    margin-top: clamp(8px, 1.5vh, 14px);
+}
+
+.result-content-wrap {
+    display: flex;
+    flex-direction: column;
+    width: clamp(300px, 88vw, 520px);
+    align-self: center;
+    gap: clamp(10px, 1.8vh, 16px);
+}
+
 .card-stack {
     position: relative;
     width: 100%;
-    max-width: clamp(300px, 85vw, 500px);
-    aspect-ratio: 4/3;
+    height: 52vh;
+    max-height: 440px;
     opacity: 0;
-    animation: fadeUp 0.6s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: fadeUp 0.6s 0.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .result-card {
     position: absolute;
     inset: 0;
-    border-radius: clamp(20px, 4vw, 36px);
+    border-radius: clamp(32px, 6vw, 52px);
     border: 3px solid #111;
     overflow: hidden;
     cursor: grab;
@@ -66,8 +83,8 @@
 
 .cat-full-img {
     position: absolute;
-    width: 85%;
-    height: 58%;
+    width: 70%;
+    height: 65%;
     object-fit: contain;
     object-position: center;
     top: 50%;
@@ -88,7 +105,7 @@
     color: #000000;
     white-space: nowrap;
     text-align: center;
-    margin-top: -8px;
+    margin-bottom: clamp(18px, 3.5vh, 28px);
 }
 
 @keyframes pulse {
@@ -153,29 +170,9 @@
     bottom: clamp(24px, 5vh, 48px);
     left: clamp(16px, 4vw, 32px);
     right: clamp(16px, 4vw, 32px);
-    background: #fff;
-    border: 2.5px solid #111;
-    border-radius: 999px;
-    padding: clamp(14px, 2.5vh, 22px);
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(16px, 3.5vw, 26px);
-    font-weight: 500;
-    color: #111;
-    cursor: pointer;
-    text-align: center;
-    transition: background 0.2s ease, transform 0.15s ease;
     opacity: 0;
     animation: fadeUp 0.5s 0.6s ease forwards;
     z-index: 20;
-}
-
-.continue-btn:hover {
-    background: #f0f0f0;
-}
-
-.continue-btn:active {
-    background: #e0e0e0;
-    transform: scale(0.98);
 }
 
 @keyframes fadeUp {
@@ -196,8 +193,7 @@
 @media (max-width: 480px) {
     .page {
         padding: 12px;
-        padding-top: 80px;
-        padding-bottom: 60px;
+        padding-bottom: 120px;
     }
 
     .result-subtitle {
@@ -209,25 +205,12 @@
     }
 
     .card-stack {
-        max-width: 95vw;
-        aspect-ratio: 3/3.2;
+        width: 100%;
     }
 
     .result-card {
         border-radius: 16px;
         border-width: 2px;
-    }
-
-    .cat-img {
-        height: 40%;
-    }
-
-    .result-content {
-        padding: 16px 12px;
-    }
-
-    .trait-title {
-        font-size: 16px;
     }
 
     .trait-list {
@@ -239,10 +222,6 @@
         padding: 6px 10px;
     }
 
-    .continue-btn {
-        padding: 12px 20px;
-        font-size: 14px;
-    }
 
     .personality-inner {
         padding: 16px;
@@ -253,8 +232,6 @@
 @media (min-width: 481px) and (max-width: 768px) {
     .page {
         padding: 16px 20px;
-        padding-top: 100px;
-        padding-bottom: 80px;
     }
 
     .result-subtitle {
@@ -266,25 +243,12 @@
     }
 
     .card-stack {
-        max-width: 90vw;
         aspect-ratio: 3/3.3;
     }
 
     .result-card {
-        border-radius: 20px;
+        border-radius: 30px;
         border-width: 3px;
-    }
-
-    .cat-img {
-        height: 45%;
-    }
-
-    .result-content {
-        padding: 20px 16px;
-    }
-
-    .trait-title {
-        font-size: 18px;
     }
 
     .trait-list {
@@ -296,10 +260,6 @@
         padding: 8px 12px;
     }
 
-    .continue-btn {
-        padding: 14px 24px;
-        font-size: 16px;
-    }
 
     .personality-inner {
         padding: 20px;
@@ -310,7 +270,6 @@
 @media (min-width: 769px) and (max-width: 1024px) {
     .page {
         padding: 32px 64px;
-        padding-top: 160px;
         padding-bottom: 140px;
     }
 
@@ -323,25 +282,12 @@
     }
 
     .card-stack {
-        max-width: 75vw;
-        aspect-ratio: 5/3;
+        aspect-ratio: 4/4.5;
     }
 
     .result-card {
         border-radius: 32px;
-        border-width: 5px;
-    }
-
-    .cat-img {
-        height: 60%;
-    }
-
-    .result-content {
-        padding: 40px 32px;
-    }
-
-    .trait-title {
-        font-size: 28px;
+        border-width: 3px;
     }
 
     .trait-list {
@@ -353,10 +299,6 @@
         padding: 14px 20px;
     }
 
-    .continue-btn {
-        padding: 20px 40px;
-        font-size: 22px;
-    }
 
     .personality-inner {
         padding: 40px;
@@ -366,7 +308,7 @@
 /* Landscape orientations */
 @media (max-height: 600px) and (orientation: landscape) {
     .page {
-        padding-top: 60px;
+
         padding-bottom: 40px;
         gap: 8px;
     }
@@ -384,18 +326,6 @@
         aspect-ratio: 3/2.8;
     }
 
-    .cat-img {
-        height: 35%;
-    }
-
-    .result-content {
-        padding: 12px 16px;
-    }
-
-    .trait-title {
-        font-size: 16px;
-    }
-
     .trait-list {
         gap: 6px;
     }
@@ -405,10 +335,6 @@
         padding: 4px 8px;
     }
 
-    .continue-btn {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
 
     .personality-inner {
         padding: 12px;

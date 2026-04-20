@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../styles/Catboard.css'
 
@@ -12,11 +12,12 @@ const Catboard = () => {
     const [selectedImageFile, setSelectedImageFile] = useState(null)
     const [catName, setCatName] = useState('')
     const [note, setNote] = useState('')
-    const [personality, setPersonality] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [stickerSize, setStickerSize] = useState(100)
     const boardRef = useRef(null)
     const fileInputRef = useRef(null)
+    const catSizesRef = useRef({})
     const navigate = useNavigate()
 
     // Load cats from backend on mount
@@ -37,25 +38,13 @@ const Catboard = () => {
             const displayCats = catsData.map(cat => {
                 const imageUrl = `${BACKEND_URL}${cat.imageUrl}`
 
-                // Test if image URL is accessible
-                fetch(imageUrl, { method: 'HEAD' })
-                    .then(response => {
-                        if (!response.ok) {
-                            console.error('Image not accessible:', imageUrl, response.status)
-                        } else {
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error checking image:', imageUrl, error)
-                    })
-
                 return {
                     ...cat,
                     img: imageUrl,
-                    size: Math.floor(Math.random() * 40 + 80),
+                    size: catSizesRef.current[cat._id] || Math.floor(Math.random() * 40 + 80),
                     x: Math.random() * 0.7 + 0.1, // Use relative positioning instead of board dimensions
                     y: Math.random() * 0.6 + 0.1,
-                    rot: Math.random() * 20 - 10,
+                    rot: (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 12 + 4),
                     ts: new Date(cat.timestamp).getTime()
                 }
             })
@@ -68,12 +57,21 @@ const Catboard = () => {
         }
     }
 
+    const handleDelete = async (catId) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/cats/${catId}`, { method: 'DELETE' })
+            if (!response.ok) throw new Error('Failed to delete')
+            setCats(prev => prev.filter(c => c._id !== catId))
+        } catch (e) {
+            console.error('Delete error:', e)
+        }
+    }
+
     const handleAddClick = () => {
         setSelectedImageData(null)
         setSelectedImageFile(null)
         setCatName('')
         setNote('')
-        setPersonality('')
         setIsModalVisible(true)
     }
 
@@ -83,7 +81,6 @@ const Catboard = () => {
         setSelectedImageFile(null)
         setCatName('')
         setNote('')
-        setPersonality('')
     }
 
     const handleFileSelect = (e) => {
@@ -100,8 +97,8 @@ const Catboard = () => {
     }
 
     const handleSubmit = async () => {
-        if (!selectedImageFile || !catName.trim()) {
-            alert('please add a photo and name for your cat!')
+        if (!selectedImageFile) {
+            alert('add your cute cat here and join the purr friends!')
             return
         }
 
@@ -126,20 +123,23 @@ const Catboard = () => {
             }
 
             const newCat = await response.json()
-            console.log('Success response:', newCat)
 
-            // Close modal first
+            if (newCat._id) {
+                catSizesRef.current[newCat._id] = stickerSize
+            }
+
             setIsModalVisible(false)
             setSelectedImageData(null)
             setSelectedImageFile(null)
             setCatName('')
             setNote('')
             setPersonality('')
+            setStickerSize(100)
 
-            // Wait a bit for modal to close, then reload cats
+            // Wait a bit for modal to close and image to be written to disk, then reload cats
             setTimeout(async () => {
                 await loadCats()
-            }, 300)
+            }, 800)
         } catch (e) {
             console.error('Upload error:', e)
             console.error('Error message:', e.message)
@@ -150,92 +150,32 @@ const Catboard = () => {
     }
 
 
-    const makeDraggable = (element) => {
-        let isDragging = false
-        let startX, startY, origX, origY
-
-        const dragStart = (e) => {
-            isDragging = true
-            const touch = e.touches ? e.touches[0] : e
-            startX = touch.clientX
-            startY = touch.clientY
-            origX = parseFloat(element.style.left) || 0
-            origY = parseFloat(element.style.top) || 0
-            element.style.zIndex = '5'
-            e.preventDefault()
-        }
-
-        const dragMove = (e) => {
-            if (!isDragging) return
-            const touch = e.touches ? e.touches[0] : e
-            const dx = touch.clientX - startX
-            const dy = touch.clientY - startY
-            element.style.left = (origX + dx) + 'px'
-            element.style.top = (origY + dy) + 'px'
-        }
-
-        const dragEnd = () => {
-            isDragging = false
-            element.style.zIndex = ''
-        }
-
-        element.addEventListener('mousedown', dragStart)
-        window.addEventListener('mousemove', dragMove)
-        window.addEventListener('mouseup', dragEnd)
-        element.addEventListener('touchstart', dragStart, { passive: false })
-        element.addEventListener('touchmove', dragMove, { passive: false })
-        element.addEventListener('touchend', dragEnd)
-
-        return () => {
-            element.removeEventListener('mousedown', dragStart)
-            window.removeEventListener('mousemove', dragMove)
-            window.removeEventListener('mouseup', dragEnd)
-            element.removeEventListener('touchstart', dragStart)
-            element.removeEventListener('touchmove', dragMove)
-            element.removeEventListener('touchend', dragEnd)
-        }
-    }
-
-    useEffect(() => {
-        // Add drag functionality to cat stickers
-        const cleanupFunctions = []
-        const catElements = document.querySelectorAll('.cat-sticker')
-
-        catElements.forEach(element => {
-            const cleanup = makeDraggable(element)
-            cleanupFunctions.push(cleanup)
-        })
-
-        return () => {
-            cleanupFunctions.forEach(cleanup => cleanup())
-        }
-    }, [cats])
-
     return (
         <>
             <img src="/images/ui/1.svg" className="bg-image" alt="" />
 
             <div className="page">
                 <div className="title-section">
-                    <p className="board-title">Do you have a cat already?</p>
-                    <p className="board-subtitle">Add your cute cat's picture here to join our purr friends!</p>
+                    <p className="board-title">Add your cute cat to the purr family</p>
+                    <p className="board-subtitle">No cat yet? Scroll through our cute gallery and enjoy the view until you get one. </p>
                 </div>
 
-                <div className="board-wrap">
-                    <div className="board" ref={boardRef}>
+                <div className="board-container">
+                    <div className="board-wrap">
                         {isLoading && (
                             <p className="loading-text">loading purr board...</p>
                         )}
                         {!isLoading && cats.length === 0 && (
                             <div className="empty-state">
-                                <p>no cats yet! be the first to add yours 🐾</p>
+                                <p>Add your cute cat photo and join the purr friends</p>
                             </div>
                         )}
-                        {cats.map((cat, index) => (
-                            <CatSticker key={cat.ts || index} cat={cat} boardRef={boardRef} />
-                        ))}
+                        <div className="board" ref={boardRef}>
+                            {cats.map((cat, index) => (
+                                <CatSticker key={cat.ts || index} cat={cat} boardRef={boardRef} onDelete={handleDelete} />
+                            ))}
+                        </div>
                     </div>
-
                     <button className="add-btn" onClick={handleAddClick} aria-label="Add cat">
                         <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
                             <line x1="12" y1="5" x2="12" y2="19" />
@@ -244,12 +184,15 @@ const Catboard = () => {
                     </button>
                 </div>
 
+                <button className="btn-primary continue-btn" onClick={() => navigate('/final')}>
+                    Continue
+                </button>
             </div>
 
             {isModalVisible && (
                 <div className="modal-overlay visible">
                     <div className="modal">
-                        <p className="modal-title">add your cat 🐱</p>
+                        <p className="modal-title">add your cat here </p>
                         <div className="upload-area" onClick={() => fileInputRef.current.click()}>
                             {selectedImageData ? (
                                 <img className="upload-preview" src={selectedImageData} alt="Preview" style={{ display: 'block' }} />
@@ -274,27 +217,22 @@ const Catboard = () => {
                         <input
                             className="note-input"
                             type="text"
-                            placeholder="your cat's name..."
-                            maxLength="30"
-                            value={catName}
-                            onChange={(e) => setCatName(e.target.value)}
-                        />
-                        <input
-                            className="note-input"
-                            type="text"
-                            placeholder="cat's personality (e.g., playful, sleepy)..."
-                            maxLength="30"
-                            value={personality}
-                            onChange={(e) => setPersonality(e.target.value)}
-                        />
-                        <input
-                            className="note-input"
-                            type="text"
                             placeholder="add a note about your cat..."
                             maxLength="40"
                             value={note}
                             onChange={(e) => setNote(e.target.value)}
                         />
+                        <div className="size-slider-wrap">
+                            <span className="size-slider-label">sticker size: {stickerSize}px</span>
+                            <input
+                                className="size-slider"
+                                type="range"
+                                min="60"
+                                max="200"
+                                value={stickerSize}
+                                onChange={(e) => setStickerSize(Number(e.target.value))}
+                            />
+                        </div>
                         <div className="modal-btn-row">
                             <button className="modal-cancel" onClick={handleCancel}>cancel</button>
                             <button
@@ -312,20 +250,37 @@ const Catboard = () => {
     )
 }
 
-const CatSticker = ({ cat, boardRef }) => {
+const CatSticker = ({ cat, boardRef, onDelete }) => {
     const stickerRef = useRef(null)
+    const [imageError, setImageError] = useState(false)
+    const [retryCount, setRetryCount] = useState(0)
+    const maxRetries = 3
+
+    // Retry loading image if it fails
+    const handleImageError = () => {
+        if (retryCount < maxRetries) {
+            setRetryCount(retryCount + 1)
+            // Wait before retrying
+            setTimeout(() => {
+                if (stickerRef.current?.querySelector('img')) {
+                    stickerRef.current.querySelector('img').src = cat.img + '?t=' + Date.now()
+                }
+            }, 1500)
+        } else {
+            setImageError(true)
+        }
+    }
 
     useEffect(() => {
         if (!stickerRef.current || !boardRef.current) return
 
-        const boardRect = boardRef.current.getBoundingClientRect()
-        const w = boardRect.width || 300
-        const h = boardRect.height || 400
+        const w = boardRef.current.offsetWidth || 300
+        const h = boardRef.current.offsetHeight || 800
 
         const size = cat.size || Math.floor(Math.random() * 40 + 80)
         const x = cat.x !== undefined ? cat.x * w : Math.random() * (w - size - 20) + 10
         const y = cat.y !== undefined ? cat.y * h : Math.random() * (h - size - 60) + 10
-        const rot = cat.rot !== undefined ? cat.rot : (Math.random() * 20 - 10)
+        const rot = cat.rot !== undefined ? cat.rot : (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 12 + 4)
 
         const element = stickerRef.current
         element.style.width = size + 'px'
@@ -381,29 +336,21 @@ const CatSticker = ({ cat, boardRef }) => {
 
     return (
         <div className="cat-sticker" ref={stickerRef}>
-            <img
-                src={cat.img}
-                alt="Cat"
-                onError={(e) => {
-                    console.error('Failed to load cat image:', cat.img);
-                    e.target.style.display = 'none';
-                    // Show a placeholder
-                    const placeholder = document.createElement('div');
-                    placeholder.style.cssText = 'width: 100%; height: 100%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 24px; border-radius: 8px; border: 2px solid #111;';
-                    placeholder.textContent = '??';
-                    e.target.parentNode.appendChild(placeholder);
-                }}
-            />
+            <button
+                className="sticker-delete-btn"
+                onClick={(e) => { e.stopPropagation(); onDelete(cat._id) }}
+            >×</button>
+            {!imageError ? (
+                <img src={cat.img} alt="Cat" onError={handleImageError} />
+            ) : (
+                <div style={{
+                    width: '100%', height: '100%', background: '#f0f0f0',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '24px', borderRadius: '8px', border: '2px solid #111'
+                }}>??</div>
+            )}
             <div className="cat-info">
-                {cat.name && (
-                    <p className="cat-name">{cat.name}</p>
-                )}
-                {cat.personality && (
-                    <p className="cat-personality">{cat.personality}</p>
-                )}
-                {cat.note && (
-                    <p className="cat-note">{cat.note}</p>
-                )}
+                {cat.note && <p className="cat-note">{cat.note}</p>}
             </div>
         </div>
     )

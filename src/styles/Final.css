@@ -1,0 +1,72 @@
+.final-page {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 4vw, 40px);
+    padding-top: clamp(80px, 12vh, 120px);
+    padding-bottom: clamp(80px, 12vh, 120px);
+    gap: clamp(24px, 4vh, 40px);
+}
+
+.final-cats-img {
+    width: clamp(260px, 70vw, 480px);
+    max-height: 40vh;
+    object-fit: contain;
+    align-self: center;
+}
+
+.final-text-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 2.5vh, 28px);
+    text-align: center;
+}
+
+.final-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #111;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.final-btn {
+    width: clamp(240px, 80vw, 480px);
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .final-page {
+        padding-top: 70px;
+        padding-bottom: 60px;
+        gap: 20px;
+    }
+
+    .final-cats-img {
+        width: 85vw;
+    }
+
+    .final-text {
+        font-size: 20px;
+    }
+}
+
+/* Landscape */
+@media (max-height: 600px) and (orientation: landscape) {
+    .final-page {
+        padding-top: 60px;
+        gap: 12px;
+    }
+
+    .final-cats-img {
+        max-height: 30vh;
+    }
+
+    .final-text {
+        font-size: 20px;
+    }
+}

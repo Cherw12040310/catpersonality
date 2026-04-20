@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: space-between;
   z-index: 10;
+  overflow: visible;
 }
 
 .path-point {
@@ -34,13 +35,14 @@
   position: relative;
   margin: 0 clamp(4px, 1vw, 12px);
   margin-bottom: clamp(16px, 3vh, 30px);
+  overflow: visible;
 }
 
-.nav-line { 
-  width: 100%; 
-  height: clamp(40px, 8vh, 80px); 
-  object-fit: fill; 
-  display: block; 
+.nav-line {
+  width: 100%;
+  height: clamp(40px, 8vh, 80px);
+  object-fit: fill;
+  display: block;
 }
 
 .cat-move {

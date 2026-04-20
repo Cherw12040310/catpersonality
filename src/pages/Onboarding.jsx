@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Navigation from '../components/Navigation'
 import '../styles/Onboarding.css'
 
 const Onboarding = () => {
@@ -20,8 +21,8 @@ const Onboarding = () => {
             cat: 'cat screen one.svg',
             catClass: '',
             doodles: [
-                { src: 'swirl one.svg', style: { width: '10vw', maxWidth: '80px', top: '8%', left: '28%' } },
-                { src: 'swirl two.svg', style: { width: '10vw', maxWidth: '80px', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' } },
+                { src: 'swirl one.svg', style: { width: '10vw', maxWidth: '80px', top: '8%', left: '58%' } },
+                { src: 'swirl two.svg', style: { width: '10vw', maxWidth: '80px', top: '50%', left: '40%', transform: 'translate(-50%,-50%)' } },
                 { src: 'swirl three.svg', style: { width: '10vw', maxWidth: '80px', top: '80%', left: '30%', transform: 'translate(-50%,-50%)' } },
                 { src: 'line one.svg', style: { width: '14vw', maxWidth: '110px', top: '30%', right: '8%' } },
                 { src: 'line one.svg', style: { width: '14vw', maxWidth: '110px', top: '50%', left: '10%' } },
@@ -59,18 +60,18 @@ const Onboarding = () => {
                 { src: 'heart one.svg', style: { width: '6vw', maxWidth: '48px', bottom: '28%', right: '8%' } },
                 { src: 'sparkle 2.svg', style: { width: '6vw', maxWidth: '44px', bottom: '22%', left: '10%' } },
             ],
-            textClass: 'center',
+            textClass: 'center-mid',
             tapHint: true,
             enterBtn: false
         },
         {
-            lines: ["WELCOME TO THE PURR HOUSE,", "a companion of purr", "is waiting to meet you"],
+            lines: ["Welcome to the Purr House", "cats are waiting to meet you.", "Get matched and adopt one!"],
             cat: 'purr house.svg',
             catClass: 'large',
             doodles: [
-                { src: 'cloud 1.svg', style: { width: '18vw', maxWidth: '130px', top: '5%', left: '5%' } },
-                { src: 'cloud 2.svg', style: { width: '16vw', maxWidth: '120px', top: '5%', right: '5%' } },
-                { src: 'cloud 1.svg', style: { width: '14vw', maxWidth: '100px', top: '12%', left: '40%', transform: 'translateX(-50%)' } },
+                { src: 'cloud 1.svg', style: { width: '20vw', maxWidth: '130px', top: '5%', left: '5%' } },
+                { src: 'cloud 2.svg', style: { width: '20vw', maxWidth: '120px', top: '5%', right: '5%' } },
+                { src: 'cloud 1.svg', style: { width: '20vw', maxWidth: '100px', top: '12%', left: '40%', transform: 'translateX(-50%)' } },
             ],
             textClass: 'center',
             tapHint: false,
@@ -78,10 +79,23 @@ const Onboarding = () => {
         }
     ]
 
-    const handleStoryClick = (e) => {
-        if (e.target.id === 'enterBtn') return
+    const handleStoryClick = () => {}
+
+    const handleBack = (e) => {
+        e.stopPropagation()
+        if (currentSlide > 0) {
+            setCurrentSlide(currentSlide - 1)
+        } else {
+            navigate('/')
+        }
+    }
+
+    const handleNext = (e) => {
+        e.stopPropagation()
         if (currentSlide < SLIDES.length - 1) {
             setCurrentSlide(currentSlide + 1)
+        } else {
+            handleEnterHome()
         }
     }
 
@@ -165,6 +179,16 @@ const Onboarding = () => {
                 <img src="/images/ui/1.svg" className="bg-image" alt="" />
 
                 <div className="story-screen" onClick={handleStoryClick}>
+                    <div className="story-nav">
+                        <button className="story-nav-btn" onClick={handleBack}>
+                            <img src="/images/ui/back.svg" alt="back" />
+                            <span>back</span>
+                        </button>
+                        <button className="story-nav-btn" onClick={handleNext}>
+                            <img src="/images/ui/continue.svg" alt="continue" />
+                            <span>continue</span>
+                        </button>
+                    </div>
                     <div className="story-card">
                         <div id="doodleLayer">
                             {slide.doodles.map((doodle, index) => {
@@ -193,12 +217,9 @@ const Onboarding = () => {
                             ))}
                         </p>
 
-                        {slide.tapHint && (
-                            <span className="tap-hint">tap to continue →</span>
-                        )}
 
                         {slide.enterBtn && (
-                            <button className="enter-btn" onClick={handleEnterHome}>
+                            <button className="btn-filled enter-btn" onClick={handleEnterHome}>
                                 Enter home
                             </button>
                         )}
@@ -228,7 +249,14 @@ const Onboarding = () => {
                             ref={pathRef}
                             id="curvePath"
                             className="path-line"
-                            d="M 20 100 C 80 20, 140 140, 220 80 S 380 20, 480 80"
+                            d="M 20 100 C 80 20, 140 140, 220 80 S 360 20, 440 80"
+                        />
+                        <image
+                            href="/images/ui/home.svg"
+                            x="440"
+                            y="48"
+                            width="60"
+                            height="60"
                         />
                     </svg>
 
@@ -236,7 +264,7 @@ const Onboarding = () => {
                         <img src="/images/onboarding-ui/loadingcat.png" alt="cat" />
                     </div>
 
-                    <p className="entering-text">entering home....</p>
+                    <p className="entering-text">entering the purr house</p>
                 </div>
             </>
         )
@@ -246,11 +274,12 @@ const Onboarding = () => {
         return (
             <>
                 <img src="/images/ui/1.svg" className="bg-image" alt="" />
+                <Navigation />
 
                 <div className="page">
                     <div className="outer-card">
                         <div className="card-icon">
-                            <img src="/images/ui/catwithnotes.svg" alt="Quiz Icon" />
+                            <img src="/images/ui/catwithnote.svg" alt="Quiz Icon" />
                         </div>
                         <p className="card-text">
                             Let's match a companion for you. Let's get start by taking some quick questions to match vibes

@@ -125,7 +125,7 @@ const Quiz = () => {
       } else {
         showResult(newScores)
       }
-    }, 500)
+    }, 300)
   }
 
   const showResult = (finalScores) => {
@@ -153,29 +153,31 @@ const Quiz = () => {
   return (
     <>
       <img src="/images/ui/1.svg" className="bg-image" alt="" />
-      
-      <div className={`screen ${isTransitioning ? 'exit' : 'active'}`} id="questionScreen">
+
+      <div className="screen" id="questionScreen">
         <div className="question-card">
           <div className="progress-bar">
-            <div 
-              className="progress-fill" 
+            <div
+              className="progress-fill"
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
-          
-          <p className="question-text">{currentQ.question}</p>
-          
-          <div className="answers-grid">
-            {currentQ.answers.map((answer, index) => (
-              <AnswerButton
-                key={index}
-                number={NUMS[index]}
-                text={answer.text}
-                isSelected={selectedAnswer === index}
-                onClick={() => selectAnswer(index, answer.points)}
-                delay={index * 80}
-              />
-            ))}
+
+          <div className={`question-content ${isTransitioning ? 'card-exit' : 'card-active'}`}>
+            <p className="question-text">{currentQ.question}</p>
+
+            <div className="answers-grid">
+              {currentQ.answers.map((answer, index) => (
+                <AnswerButton
+                  key={`${currentQuestion}-${index}`}
+                  number={NUMS[index]}
+                  text={answer.text}
+                  isSelected={selectedAnswer === index}
+                  onClick={() => selectAnswer(index, answer.points)}
+                  delay={index * 80}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

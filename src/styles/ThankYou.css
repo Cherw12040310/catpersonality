@@ -17,7 +17,7 @@
   padding: clamp(48px, 8vw, 80px) clamp(24px, 4.5vw, 52px);
   width: 100%;
   height: auto;
-  max-width: clamp(320px, 85vw, 680px);
+  max-width: clamp(320px, 92vw, 720px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -181,13 +181,12 @@
 @media (min-width: 481px) and (max-width: 768px) {
   .page {
     padding: 16px 20px;
-    padding-top: 100px;
+    padding-top: clamp(110px, 18vh, 180px);
   }
-  
+
   .thank-you-card {
     padding: 40px 28px;
     gap: 20px;
-    max-width: 90vw;
   }
   
   .thank-you-icon {
@@ -221,13 +220,12 @@
 @media (min-width: 769px) and (max-width: 1024px) {
   .page {
     padding: 24px 48px;
-    padding-top: 140px;
+    padding-top: clamp(130px, 18vh, 200px);
   }
-  
+
   .thank-you-card {
     padding: 56px 40px;
     gap: 28px;
-    max-width: 75vw;
   }
   
   .thank-you-icon {

@@ -7,6 +7,7 @@ const CAT_DATA = {
         name: 'American Shorthair',
         img: '/images/cats/americanshorthairfull.png',
         color: '#c5caf0',
+        funFact: 'American Shorthairs were brought to America on the Mayflower to protect cargo from mice — they have been working cats from the very start.',
         doodles: [
             { src: '/images/onboarding-ui/meow.svg', style: 'width:28%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/swirl.svg', style: 'width:10%;bottom:80%;right:80%;' },
@@ -18,18 +19,17 @@ const CAT_DATA = {
             'adapts easily to new environments',
             'sleeps like it completed a long shift'
         ]
-
     },
     british_shorthair: {
         name: 'British Shorthair',
         img: '/images/cats/britishshorthairfull.png',
         color: '#B5D5B0',
+        funFact: 'British Shorthairs are one of the oldest recorded cat breeds, dating all the way back to the domestic cats of ancient Rome.',
         doodles: [
             { src: '/images/onboarding-ui/icecream.svg', style: 'width:28%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/star.png', style: 'width:15%;bottom:20%;right:80%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;bottom:80%;left:8%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;top:80%;right:9%;' },
-
         ],
         traits: [
             'calm and collected in every situation',
@@ -42,11 +42,11 @@ const CAT_DATA = {
         name: 'Maine Coon',
         img: '/images/cats/mainecoonfull.png',
         color: '#c29790',
+        funFact: 'Maine Coons are the largest domestic cat breed and can take up to 4 years to fully grow — they are basically eternal kittens.',
         doodles: [
             { src: '/images/onboarding-ui/icecream.svg', style: 'width:28%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/star.png', style: 'width:15%;bottom:20%;right:80%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;bottom:80%;left:8%;' },
-
         ],
         traits: [
             'adventurous and always up for something new',
@@ -59,12 +59,12 @@ const CAT_DATA = {
         name: 'Birman',
         img: '/images/cats/birmanfull.png',
         color: '#F5C2E2',
+        funFact: 'Known as the Sacred Cat of Burma, legend says Birmans got their deep blue eyes as a gift from a goddess for their loyalty.',
         doodles: [
             { src: '/images/onboarding-ui/icecream.svg', style: 'width:28%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/star.png', style: 'width:15%;bottom:20%;right:80%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;bottom:80%;left:8%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;top:80%;right:9%;' },
-
         ],
         traits: [
             'gentle and deeply caring',
@@ -77,6 +77,7 @@ const CAT_DATA = {
         name: 'Ragdoll',
         img: '/images/cats/ragdollfull.png',
         color: '#be8780',
+        funFact: 'Ragdolls go completely limp when picked up, like a real ragdoll — that relaxed, trusting quality is literally how they got their name.',
         doodles: [
             { src: '/images/onboarding-ui/meow.svg', style: 'width:28%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/swirl.svg', style: 'width:10%;bottom:80%;right:80%;' },
@@ -93,12 +94,12 @@ const CAT_DATA = {
         name: 'Tabby',
         img: '/images/cats/tabbyfull.png',
         color: '#829fcd',
+        funFact: 'Tabby is not a breed — it is a coat pattern! Every tabby shares the iconic M marking on their forehead, no matter the breed.',
         doodles: [
             { src: '/images/onboarding-ui/icecream.svg', style: 'width:28%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/star.png', style: 'width:15%;bottom:20%;right:80%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;bottom:80%;left:8%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;top:80%;right:9%;' },
-
         ],
         traits: [
             'always involved in everything',
@@ -111,12 +112,12 @@ const CAT_DATA = {
         name: 'Tuxedo',
         img: '/images/cats/tuxedofull.png',
         color: '#7f8bb5',
+        funFact: 'Tuxedo cats have been owned by Isaac Newton, Mark Twain, and even Beethoven — they have always had a thing for creative genius.',
         doodles: [
             { src: '/images/onboarding-ui/icecream.svg', style: 'width:28%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/star.png', style: 'width:15%;bottom:20%;right:80%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;bottom:80%;left:8%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;top:80%;right:9%;' },
-
         ],
         traits: [
             'walks into a room and owns it',
@@ -213,7 +214,7 @@ const Result = () => {
     }
 
     const handleContinue = () => {
-        navigate('/thank-you')
+        navigate('/catboard')
     }
 
     useEffect(() => {
@@ -252,11 +253,7 @@ const Result = () => {
             <img src="/images/ui/1.svg" className="bg-image" alt="" />
 
             <div className="page">
-                <div className="title-wrap">
-                    <p className="result-subtitle">You are matched with a</p>
-                    <h1 className="result-name">{catData.name}</h1>
-                </div>
-
+                <div className="result-content-wrap">
                 <div className="card-stack">
                     <div
                         className={`result-card personality-card ${isSwiped ? 'revealed' : ''}`}
@@ -300,7 +297,14 @@ const Result = () => {
                     </div>
                 </div>
 
-                <button className="continue-btn" onClick={handleContinue}>continue</button>
+                <div className="title-wrap">
+                    <p className="result-subtitle">You are matched with a</p>
+                    <h1 className="result-name">{catData.name}</h1>
+                    <p className="result-funfact">{catData.funFact}</p>
+                </div>
+                </div>
+
+                <button className="btn-primary continue-btn" onClick={handleContinue}>continue</button>
             </div>
         </>
     )

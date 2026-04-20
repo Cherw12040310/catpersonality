@@ -164,11 +164,11 @@ app.post('/api/cats', upload.single('image'), (req, res) => {
     console.log('Uploaded file:', req.file ? { filename: req.file.filename, size: req.file.size } : 'none');
 
     try {
-        const { name, note, personality } = req.body;
+        const { note } = req.body;
 
-        if (!name || !req.file) {
-            console.log('Validation failed - missing name or image');
-            return res.status(400).json({ error: 'Name and image are required' });
+        if (!req.file) {
+            console.log('Validation failed - missing image');
+            return res.status(400).json({ error: 'Image is required' });
         }
 
         // Read existing cats
@@ -177,10 +177,8 @@ app.post('/api/cats', upload.single('image'), (req, res) => {
 
         // Create new cat entry
         const newCat = {
-            id: uuidv4(),
-            name: name.trim(),
+            _id: uuidv4(),
             note: note ? note.trim() : '',
-            personality: personality || 'unknown',
             imageUrl: `/uploads/${req.file.filename}`,
             timestamp: new Date().toISOString()
         };
@@ -208,7 +206,7 @@ app.delete('/api/cats/:id', (req, res) => {
         const cats = JSON.parse(catsData);
 
         // Find and remove cat
-        const catIndex = cats.findIndex(cat => cat.id === id);
+        const catIndex = cats.findIndex(cat => cat._id === id || cat.id === id);
         if (catIndex === -1) {
             return res.status(404).json({ error: 'Cat not found' });
         }

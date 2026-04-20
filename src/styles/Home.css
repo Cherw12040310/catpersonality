@@ -1,0 +1,69 @@
+.home-page {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(24px, 5vw, 60px);
+    gap: clamp(20px, 4vh, 40px);
+}
+
+.home-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20vw;
+    font-weight: 500;
+    color: #111;
+    text-align: center;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.home-subtitle {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #111;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.home-gif-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-gif {
+    width: 100vw;
+    height: auto;
+    object-fit: contain;
+}
+
+.home-btn {
+    width: clamp(240px, 75vw, 400px);
+}
+
+@media (max-width: 480px) {
+    .home-title {
+        font-size: clamp(36px, 14vw, 52px);
+    }
+
+    .home-gif {
+        width: 75vw;
+    }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+    .home-page {
+        gap: 12px;
+    }
+
+    .home-title {
+        font-size: 32px;
+    }
+
+    .home-gif {
+        width: 35vw;
+    }
+}

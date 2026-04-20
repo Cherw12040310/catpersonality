@@ -7,17 +7,16 @@
     justify-content: center;
     padding: clamp(16px, 4vw, 40px);
     padding-top: clamp(110px, 18vh, 180px);
-    padding-bottom: clamp(16px, 3vh, 40px);
+    padding-bottom: clamp(110px, 18vh, 180px);
 }
 
 /* ─── DARK CARD ─── */
 .outer-card {
-    background: #111;
+    background: #EEEEEE;
     border-radius: clamp(20px, 4vw, 40px);
-    padding: clamp(24px, 5vw, 52px);
-    width: 100%;
-    height: 100%;
-    max-width: clamp(320px, 85vw, 680px);
+    width: 95%;
+    height: 80%;
+    max-width: clamp(320px, 92vw, 720px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,34 +24,66 @@
     gap: clamp(20px, 3.5vh, 36px);
     opacity: 0;
     animation: fadeIn 0.5s 0.1s ease forwards;
+    border: 2px solid #111;
 }
 
 /* ─── BUTTONS ─── */
 .btn-primary {
-    width: 100%;
+    width: 80%;
+    min-width: clamp(200px, 70vw, 380px);
+    margin: 0 auto;
+    display: block;
     background: #ffffff;
-    border: none;
-    border-radius: 20px;
-    padding: clamp(14px, 2.5vh, 24px) clamp(20px, 4vw, 40px);
+    border: 2.5px solid #111;
+    border-radius: 25px;
+    padding: clamp(12px, 2vh, 18px) clamp(32px, 8vw, 60px);
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(14px, 3vw, 28px);
+    font-size: clamp(15px, 3vw, 22px);
     font-weight: 500;
     color: #111;
+    text-align: center;
     cursor: pointer;
     transition: background 0.2s ease, transform 0.15s ease;
 }
 
 .btn-primary:hover {
-    background: #e8e8e8;
+    background: #f0f0f0;
 }
 
 .btn-primary:active {
-    background: #c8c8c8;
+    background: #e0e0e0;
+    transform: scale(0.98);
+}
+
+.btn-filled {
+    width: 80%;
+    min-width: clamp(200px, 70vw, 380px);
+    margin: 0 auto;
+    display: block;
+    background: #111;
+    border: 2.5px solid #111;
+    border-radius: 20px;
+    padding: clamp(12px, 2vh, 18px) clamp(32px, 8vw, 60px);
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(15px, 3vw, 22px);
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-filled:hover {
+    background: #333;
+}
+
+.btn-filled:active {
+    background: #333;
     transform: scale(0.98);
 }
 
 .btn-outline {
-    width: 100%;
+    width: 80%;
     background: transparent;
     border: 2px solid #ffffff;
     border-radius: 20px;
@@ -85,9 +116,9 @@
 
 .card-text {
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(14px, 3.2vw, 32px);
+    font-size: 20px;
     font-weight: 400;
-    color: #f0ece8;
+    color: #000000;
     text-align: center;
     line-height: 1.5;
 }
@@ -120,7 +151,7 @@
 /* ─── RESPONSIVE BREAKPOINTS ─── */
 
 /* Small phones (320px - 480px) */
-@media (max-width: 480px) {
+@media (max-width: 420px) {
     .page {
         padding: 12px;
         padding-top: 80px;
@@ -128,9 +159,9 @@
     }
 
     .outer-card {
-        padding: 20px 16px;
-        gap: 16px;
-        max-width: 95vw;
+        padding: 24px 20px;
+        gap: 20px;
+        max-width: 92vw;
     }
 
     .btn-primary,
@@ -144,7 +175,7 @@
     }
 
     .card-text {
-        font-size: 14px;
+        font-size: 20px;
         line-height: 1.4;
     }
 }
@@ -153,13 +184,12 @@
 @media (min-width: 481px) and (max-width: 768px) {
     .page {
         padding: 16px 20px;
-        padding-top: 100px;
+        padding-top: clamp(110px, 18vh, 180px);
     }
 
     .outer-card {
         padding: 24px 20px;
         gap: 20px;
-        max-width: 90vw;
     }
 
     .btn-primary,
@@ -173,7 +203,7 @@
     }
 
     .card-text {
-        font-size: 16px;
+        font-size: 20px;
     }
 }
 
@@ -181,13 +211,12 @@
 @media (min-width: 769px) and (max-width: 1024px) {
     .page {
         padding: 32px 64px;
-        padding-top: 160px;
+        padding-top: clamp(130px, 18vh, 200px);
     }
 
     .outer-card {
         padding: 48px 40px;
         gap: 32px;
-        max-width: 75vw;
     }
 
     .btn-primary,
@@ -201,7 +230,7 @@
     }
 
     .card-text {
-        font-size: 22px;
+        font-size: 20px;
         line-height: 1.5;
     }
 }
@@ -223,6 +252,6 @@
     }
 
     .card-text {
-        font-size: 14px;
+        font-size: 20px;
     }
 }
