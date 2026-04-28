@@ -36,7 +36,7 @@ const Catboard = () => {
 
             // Transform backend data to display format
             const displayCats = catsData.map(cat => {
-                const imageUrl = `${BACKEND_URL}${cat.imageUrl}`
+                const imageUrl = cat.imageUrl.startsWith('http') ? cat.imageUrl : `${BACKEND_URL}${cat.imageUrl}`
 
                 return {
                     ...cat,
