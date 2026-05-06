@@ -63,7 +63,7 @@ const QUESTIONS = [
     answers: [
       { text: "Cozy and minimal, very calm",          points: { birman: 2, british_shorthair: 1 } },
       { text: "Lively, always people over",           points: { tabby: 2, maincoon: 1 } },
-      { text: "Warm and full of personal touches",    points: { ragdoll: 2, birman: 1 } },
+      { text: "Warm and full of personal touches",    points: { ragdoll: 2, american_shorthair: 1 } },
       { text: "Stylish and a little bold",            points: { tuxedo: 2, british_shorthair: 1 } }
     ]
   },

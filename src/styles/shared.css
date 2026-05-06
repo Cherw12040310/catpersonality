@@ -235,6 +235,55 @@
     }
 }
 
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+    .outer-card {
+        width: min(56vw, 780px);
+        height: min(82vh, 920px);
+        max-width: unset;
+    }
+
+    .btn-primary,
+    .btn-filled,
+    .btn-outline {
+        max-width: 540px;
+        font-size: 40px;
+        border-radius: 35px;
+    }
+
+    .card-text {
+        font-size: 40px;
+    }
+}
+
+/* Large desktop (1440px+) */
+@media (min-width: 1440px) {
+    .outer-card {
+        width: min(44vw, 800px);
+        height: min(80vh, 960px);
+    }
+}
+
+/* Portrait desktop (e.g. 1080x1920 rotated monitor) */
+@media (min-width: 1025px) and (orientation: portrait) {
+    .outer-card {
+        width: min(72vw, 820px);
+        height: min(70vh, 1000px);
+    }
+
+    .btn-primary,
+    .btn-filled,
+    .btn-outline {
+        max-width: 560px;
+        font-size: 40px;
+        border-radius: 35px;
+    }
+
+    .card-text {
+        font-size: 40px;
+    }
+}
+
 /* Landscape orientations */
 @media (max-height: 600px) and (orientation: landscape) {
     .page {

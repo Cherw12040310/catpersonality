@@ -305,6 +305,81 @@
     }
 }
 
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+    .result-content-wrap {
+        width: min(56vw, 760px);
+    }
+
+    .card-stack {
+        height: min(60vh, 740px);
+        max-height: unset;
+    }
+
+    .result-name {
+        font-size: clamp(44px, 4vw, 72px);
+    }
+
+    .result-subtitle {
+        font-size: 40px;
+    }
+
+    .result-funfact {
+        font-size: 40px;
+    }
+
+    .trait-text {
+        font-size: 40px;
+    }
+
+    .personality-label {
+        font-size: 40px;
+    }
+
+    .continue-btn {
+        left: 0;
+        right: 0;
+        width: clamp(280px, 22vw, 480px);
+        margin: 0 auto;
+    }
+}
+
+/* Portrait desktop (e.g. 1080x1920 rotated monitor) */
+@media (min-width: 1025px) and (orientation: portrait) {
+    .result-content-wrap {
+        width: min(72vw, 760px);
+    }
+
+    .card-stack {
+        height: min(55vh, 800px);
+    }
+
+    .result-name {
+        font-size: clamp(48px, 5vw, 80px);
+    }
+
+    .result-subtitle {
+        font-size: 40px;
+    }
+
+    .result-funfact {
+        font-size: 40px;
+    }
+
+    .trait-text {
+        font-size: 40px;
+    }
+
+    .personality-label {
+        font-size: 40px;
+    }
+
+    .cat-full-img {
+        width: 85%;
+        height: 80%;
+    }
+}
+
 /* Landscape orientations */
 @media (max-height: 600px) and (orientation: landscape) {
     .page {

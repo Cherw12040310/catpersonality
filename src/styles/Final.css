@@ -12,8 +12,8 @@
 }
 
 .final-cats-img {
-    width: clamp(260px, 70vw, 480px);
-    max-height: 40vh;
+    width: clamp(300px, 82vw, 600px);
+    max-height: 50vh;
     object-fit: contain;
     align-self: center;
 }
@@ -36,6 +36,18 @@
 
 .final-btn {
     width: clamp(240px, 80vw, 480px);
+}
+
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+    .final-btn {
+        max-width: 540px;
+        font-size: 40px;
+    }
+
+    .final-text {
+        font-size: 40px;
+    }
 }
 
 /* Small phones */

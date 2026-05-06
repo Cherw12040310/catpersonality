@@ -9,9 +9,9 @@ const CAT_DATA = {
         color: '#c5caf0',
         funFact: 'American Shorthairs were brought to America on the Mayflower to protect cargo from mice — they have been working cats from the very start.',
         doodles: [
+            { src: '/images/onboarding-ui/cup.svg', style: 'width:18%;top:15%;left:15%;' },
             { src: '/images/onboarding-ui/meow.svg', style: 'width:28%;top:8%;right:8%;' },
-            { src: '/images/onboarding-ui/swirl.svg', style: 'width:10%;bottom:80%;right:80%;' },
-            { src: '/images/onboarding-ui/flower.svg', style: 'width:12%;bottom:10%;left:8%;' },
+            { src: '/images/onboarding-ui/swirl.svg', style: 'width:12%;bottom:10%;left:8%;' },
         ],
         traits: [
             'chill but secretly affectionate',
@@ -23,12 +23,13 @@ const CAT_DATA = {
     british_shorthair: {
         name: 'British Shorthair',
         img: '/images/cats/britishshorthairfull.png',
-        color: '#B5D5B0',
+        color: '#A5BCA1',
         funFact: 'British Shorthairs are one of the oldest recorded cat breeds, dating all the way back to the domestic cats of ancient Rome.',
         doodles: [
+            { src: '/images/onboarding-ui/hi.svg', style: 'width:20%;top:10%;left:10%;' },
             { src: '/images/onboarding-ui/icecream.svg', style: 'width:28%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/star.png', style: 'width:15%;bottom:20%;right:80%;' },
-            { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;bottom:80%;left:8%;' },
+
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;top:80%;right:9%;' },
         ],
         traits: [
@@ -41,10 +42,10 @@ const CAT_DATA = {
     maincoon: {
         name: 'Maine Coon',
         img: '/images/cats/mainecoonfull.png',
-        color: '#c29790',
+        color: '#BC6E64',
         funFact: 'Maine Coons are the largest domestic cat breed and can take up to 4 years to fully grow — they are basically eternal kittens.',
         doodles: [
-            { src: '/images/onboarding-ui/icecream.svg', style: 'width:28%;top:8%;right:8%;' },
+            { src: '/images/onboarding-ui/heartbubble.svg', style: 'width:30%;top:6%;right:6%;' },
             { src: '/images/onboarding-ui/star.png', style: 'width:15%;bottom:20%;right:80%;' },
             { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;bottom:80%;left:8%;' },
         ],
@@ -76,9 +77,10 @@ const CAT_DATA = {
     ragdoll: {
         name: 'Ragdoll',
         img: '/images/cats/ragdollfull.png',
-        color: '#be8780',
+        color: '#D8CE9C',
         funFact: 'Ragdolls go completely limp when picked up, like a real ragdoll — that relaxed, trusting quality is literally how they got their name.',
         doodles: [
+            { src: '/images/onboarding-ui/cloud.svg', style: 'width:30%;top:6%;right:6%;' },
             { src: '/images/onboarding-ui/meow.svg', style: 'width:28%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/swirl.svg', style: 'width:10%;bottom:80%;right:80%;' },
             { src: '/images/onboarding-ui/flower.svg', style: 'width:12%;bottom:10%;left:8%;' },
@@ -96,10 +98,10 @@ const CAT_DATA = {
         color: '#829fcd',
         funFact: 'Tabby is not a breed — it is a coat pattern! Every tabby shares the iconic M marking on their forehead, no matter the breed.',
         doodles: [
-            { src: '/images/onboarding-ui/icecream.svg', style: 'width:28%;top:8%;right:8%;' },
+            { src: '/images/onboarding-ui/meow2.svg', style: 'width:15%;top:8%;right:8%;' },
             { src: '/images/onboarding-ui/star.png', style: 'width:15%;bottom:20%;right:80%;' },
-            { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;bottom:80%;left:8%;' },
-            { src: '/images/onboarding-ui/swirl one.svg', style: 'width:10%;top:80%;right:9%;' },
+            { src: '/images/onboarding-ui/swirl.svg', style: 'width:10%;bottom:80%;left:8%;' },
+            { src: '/images/onboarding-ui/flower.svg', style: 'width:10%;top:80%;right:9%;' },
         ],
         traits: [
             'always involved in everything',
@@ -292,7 +294,7 @@ const Result = () => {
                         <img className="cat-full-img" src={catData.img} alt={catData.name} />
 
                         {showSwipeHint && (
-                            <p className="swipe-hint">swipe to reveal</p>
+                            <p className="swipe-hint">flip to check out their lifestyle habits</p>
                         )}
                     </div>
                 </div>

@@ -54,6 +54,43 @@
     }
 }
 
+@media (min-width: 1025px) {
+    .home-title {
+        font-size: clamp(80px, 10vw, 160px);
+    }
+
+    .home-gif {
+        width: clamp(300px, 35vw, 560px);
+    }
+
+    .home-subtitle {
+        font-size: 40px;
+    }
+
+    .home-btn {
+        width: clamp(280px, 20vw, 420px);
+    }
+}
+
+/* Portrait desktop (e.g. 1080x1920 rotated monitor) */
+@media (min-width: 1025px) and (orientation: portrait) {
+    .home-title {
+        font-size: clamp(100px, 14vw, 200px);
+    }
+
+    .home-gif {
+        width: clamp(360px, 55vw, 700px);
+    }
+
+    .home-subtitle {
+        font-size: 40px;
+    }
+
+    .home-btn {
+        width: clamp(300px, 50vw, 520px);
+    }
+}
+
 @media (max-height: 600px) and (orientation: landscape) {
     .home-page {
         gap: 12px;
