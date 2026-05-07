@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
 const cors = require('cors');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
@@ -8,6 +10,7 @@ const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 const app = express();
+const server = http.createServer(app);
 const PORT = process.env.PORT || 3001;
 
 // Cloudinary config
@@ -46,6 +49,29 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 };
+
+const io = new Server(server, {
+    cors: {
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true);
+            const productionOrigin = process.env.PRODUCTION_ORIGIN;
+            const nodeEnv = process.env.NODE_ENV || 'development';
+            const allowedDevOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174', 'http://127.0.0.1:5173'];
+            if (nodeEnv === 'development') {
+                if (allowedDevOrigins.includes(origin)) return callback(null, true);
+            } else {
+                if (productionOrigin && origin === productionOrigin) return callback(null, true);
+            }
+            callback(new Error('Not allowed by CORS'));
+        },
+        methods: ['GET', 'POST']
+    }
+});
+
+io.on('connection', (socket) => {
+    console.log('Client connected:', socket.id);
+    socket.on('disconnect', () => console.log('Client disconnected:', socket.id));
+});
 
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
@@ -114,6 +140,7 @@ app.post('/api/cats', upload.single('image'), (req, res) => {
         cats.push(newCat);
         fs.writeFileSync(catsDbPath, JSON.stringify(cats, null, 2));
 
+        io.emit('catAdded', newCat);
         res.status(201).json(newCat);
     } catch (error) {
         console.error('Error saving cat:', error);
@@ -142,6 +169,7 @@ app.delete('/api/cats/:id', async (req, res) => {
         cats.splice(catIndex, 1);
         fs.writeFileSync(catsDbPath, JSON.stringify(cats, null, 2));
 
+        io.emit('catDeleted', id);
         res.json({ message: 'Cat deleted successfully' });
     } catch (error) {
         console.error('Error deleting cat:', error);
@@ -156,6 +184,6 @@ app.use((error, req, res, next) => {
     res.status(500).json({ error: error.message || 'Server error' });
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Cat personality backend running on port ${PORT}`);
 });

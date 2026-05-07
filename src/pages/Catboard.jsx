@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { io } from 'socket.io-client'
 import '../styles/Catboard.css'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
@@ -20,9 +21,30 @@ const Catboard = () => {
     const catSizesRef = useRef({})
     const navigate = useNavigate()
 
-    // Load cats from backend on mount
+    // Load cats from backend on mount + real-time socket
     useEffect(() => {
         loadCats()
+
+        const socket = io(BACKEND_URL)
+
+        socket.on('catAdded', (newCat) => {
+            const imageUrl = newCat.imageUrl.startsWith('http') ? newCat.imageUrl : `${BACKEND_URL}${newCat.imageUrl}`
+            setCats(prev => [{
+                ...newCat,
+                img: imageUrl,
+                size: Math.floor(Math.random() * 40 + 80),
+                x: Math.random() * 0.7 + 0.1,
+                y: Math.random() * 0.6 + 0.1,
+                rot: (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 12 + 4),
+                ts: new Date(newCat.timestamp).getTime()
+            }, ...prev])
+        })
+
+        socket.on('catDeleted', (id) => {
+            setCats(prev => prev.filter(c => c._id !== id))
+        })
+
+        return () => socket.disconnect()
     }, [])
 
     const loadCats = async () => {
@@ -133,11 +155,6 @@ const Catboard = () => {
             setCatName('')
             setNote('')
             setStickerSize(100)
-
-            // Wait a bit for modal to close and image to be written to disk, then reload cats
-            setTimeout(async () => {
-                await loadCats()
-            }, 800)
         } catch (e) {
             console.error('Upload error:', e)
             console.error('Error message:', e.message)
