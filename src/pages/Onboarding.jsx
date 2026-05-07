@@ -282,7 +282,7 @@ const Onboarding = () => {
                             <img src="/images/ui/catwithnote.svg" alt="Quiz Icon" />
                         </div>
                         <p className="card-text">
-                            Let's match a companion for you. Let's get start by taking some quick questions to match vibes
+                            let's match a companion for you by answering some few fun questions
                         </p>
                         <button className="btn-primary" onClick={handleConfirm}>
                             Purr-sue

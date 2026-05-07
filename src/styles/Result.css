@@ -108,17 +108,6 @@
     margin-bottom: clamp(18px, 3.5vh, 28px);
 }
 
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 0.4;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
 
 .personality-card {
     background: #f2f0eb;

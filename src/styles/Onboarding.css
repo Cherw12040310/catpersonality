@@ -410,8 +410,8 @@
 }
 
 .card-icon img {
-    width: clamp(180px, 40vw, 280px);
-    height: clamp(180px, 40vw, 280px);
+    width: clamp(220px, 50vw, 360px);
+    height: clamp(220px, 50vw, 360px);
 }
 
 .card {
