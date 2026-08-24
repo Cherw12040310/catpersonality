@@ -14,11 +14,19 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 3001;
 
 // Cloudinary config
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-});
+const isCloudinaryConfigured = Boolean(
+    process.env.CLOUDINARY_CLOUD_NAME &&
+    process.env.CLOUDINARY_API_KEY &&
+    process.env.CLOUDINARY_API_SECRET
+);
+
+if (isCloudinaryConfigured) {
+    cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+    });
+}
 
 // CORS configuration
 const corsOptions = {
@@ -73,28 +81,42 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => console.log('Client disconnected:', socket.id));
 });
 
+// Cats database
+const catsDbPath = path.join(__dirname, 'cats.json');
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(catsDbPath)) {
+    fs.writeFileSync(catsDbPath, JSON.stringify([]));
+}
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
     next();
 });
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use('/uploads', express.static(uploadsDir));
 
-// Cats database
-const catsDbPath = path.join(__dirname, 'cats.json');
-if (!fs.existsSync(catsDbPath)) {
-    fs.writeFileSync(catsDbPath, JSON.stringify([]));
-}
-
-// Cloudinary multer storage
-const storage = new CloudinaryStorage({
-    cloudinary,
-    params: {
-        folder: 'catpersonality',
-        allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-        transformation: [{ quality: 'auto' }]
-    }
-});
+// Upload storage: use Cloudinary when configured, otherwise local filesystem fallback
+const storage = isCloudinaryConfigured
+    ? new CloudinaryStorage({
+        cloudinary,
+        params: {
+            folder: 'catpersonality',
+            allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+            transformation: [{ quality: 'auto' }]
+        }
+    })
+    : multer.diskStorage({
+        destination: (req, file, cb) => cb(null, uploadsDir),
+        filename: (req, file, cb) => {
+            const ext = path.extname(file.originalname) || '.jpg';
+            const safeName = `${Date.now()}-${uuidv4()}${ext}`;
+            cb(null, safeName);
+        }
+    });
 
 const upload = multer({
     storage,
@@ -129,11 +151,15 @@ app.post('/api/cats', upload.single('image'), (req, res) => {
         const catsData = fs.readFileSync(catsDbPath, 'utf8');
         const cats = JSON.parse(catsData);
 
+        const imageUrl = isCloudinaryConfigured
+            ? req.file.path
+            : `/uploads/${path.basename(req.file.path)}`;
+
         const newCat = {
             _id: uuidv4(),
             note: note ? note.trim() : '',
-            imageUrl: req.file.path,
-            publicId: req.file.filename,
+            imageUrl,
+            publicId: isCloudinaryConfigured ? req.file.filename : null,
             timestamp: new Date().toISOString()
         };
 
@@ -160,6 +186,13 @@ app.delete('/api/cats/:id', async (req, res) => {
         }
 
         const deletedCat = cats[catIndex];
+
+        if (deletedCat.imageUrl && deletedCat.imageUrl.startsWith('/uploads/')) {
+            const localFilePath = path.join(__dirname, deletedCat.imageUrl);
+            if (fs.existsSync(localFilePath)) {
+                fs.unlinkSync(localFilePath);
+            }
+        }
 
         // Delete from Cloudinary
         if (deletedCat.publicId) {

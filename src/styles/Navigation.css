@@ -1,7 +1,7 @@
 /* ─── PROGRESS PATH ─── */
 .progress-path {
   position: fixed;
-  top: clamp(16px, 4vh, 50px);
+  top: clamp(42px, 8vh, 96px);
   left: clamp(16px, 4vw, 50px);
   right: clamp(16px, 4vw, 50px);
   display: flex;

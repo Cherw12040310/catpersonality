@@ -25,7 +25,7 @@ const Navigation = () => {
     <div className="progress-path">
       <div className="path-point">
         <img src="/images/ui/icons8-location-100.png" className="path-pin" alt="start" />
-        <span className="path-label">Start</span>
+        <span className="path-label">start</span>
       </div>
       <div className="path-svg-wrap">
         <img src="/images/ui/navline.svg" className="nav-line" alt="" />
@@ -38,7 +38,7 @@ const Navigation = () => {
       </div>
       <div className="path-point">
         <img src="/images/ui/icons8-location-100.png" className="path-pin" alt="end" />
-        <span className="path-label">End</span>
+        <span className="path-label">end</span>
       </div>
     </div>
   )

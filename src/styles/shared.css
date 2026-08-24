@@ -43,6 +43,7 @@
     font-weight: 500;
     color: #111;
     text-align: center;
+    text-transform: lowercase;
     cursor: pointer;
     transition: background 0.2s ease, transform 0.15s ease;
 }
@@ -71,6 +72,7 @@
     color: #fff;
     cursor: pointer;
     text-align: center;
+    text-transform: lowercase;
     transition: background 0.2s ease, transform 0.15s ease;
 }
 
@@ -94,6 +96,7 @@
     font-weight: 500;
     color: #ffffff;
     cursor: pointer;
+    text-transform: lowercase;
     transition: background 0.2s ease, transform 0.15s ease;
 }
 

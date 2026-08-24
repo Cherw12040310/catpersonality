@@ -34,11 +34,11 @@ const ThankYou = () => {
           
           <div className="button-group">
             <button className="btn-primary" onClick={() => navigate('/catboard')}>
-              View Cat Board
+              view cat board
             </button>
             
             <button className="btn-outline" onClick={handleRestart}>
-              Take Quiz Again
+              take quiz again
             </button>
           </div>
           

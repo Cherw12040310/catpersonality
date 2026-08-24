@@ -36,7 +36,7 @@ const Onboarding = () => {
         {
             lines: ["Shall we find a space", "where we can just... be..."],
             cat: 'cat screen two.svg',
-            catClass: 'center-bottom',
+            catClass: 'gentle-cat',
             doodles: [
                 { src: 'heart one.svg', style: { width: '8vw', maxWidth: '55px', top: '8%', left: '18%' } },
                 { src: 'heart 3.svg', style: { width: '7vw', maxWidth: '52px', top: '10%', right: '12%' } },
@@ -52,7 +52,7 @@ const Onboarding = () => {
         {
             lines: ["cozy and safe, no worries, no thoughts"],
             cat: 'cat screen three.svg',
-            catClass: 'large',
+            catClass: 'cozy-hero',
             doodles: [
                 { src: 'heart one.svg', style: { width: '8vw', maxWidth: '55px', top: '10%', left: '18%' } },
                 { src: 'sparkle.svg', style: { width: '6vw', maxWidth: '45px', top: '12%', left: '42%' } },
